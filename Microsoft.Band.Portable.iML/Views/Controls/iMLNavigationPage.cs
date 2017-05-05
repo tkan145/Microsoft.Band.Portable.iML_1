@@ -25,8 +25,8 @@ namespace Microsoft.Band.Portable.iML
 			}
 			else
 			{
-				//BarBackgroundColor = (Color)Application.Current.Resources["Primary"];
-				//BarTextColor = (Color)Application.Current.Resources["NavigationText"];
+				BarBackgroundColor = (Color)Application.Current.Resources["Primary"];
+				BarTextColor = (Color)Application.Current.Resources["NavigationText"];
 			}
 		}
 	}

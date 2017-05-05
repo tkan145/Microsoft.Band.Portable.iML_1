@@ -13,7 +13,7 @@ namespace Microsoft.Band.Portable.iML.Views
 		public RootPageAndroid()
 		{
 			pages = new Dictionary<int, iMLNavigationPage>();
-		    Master = new MenuPage(this);
+			Master = new MenuPage(this);
 
 			pages.Add(0, new iMLNavigationPage(new DashboardPage()));
 
@@ -30,7 +30,9 @@ namespace Microsoft.Band.Portable.iML.Views
 					case (int)AppPage.Dashboard: //Feed
 						pages.Add(menuId, new iMLNavigationPage(new DashboardPage()));
 						break;
-
+					case (int)AppPage.Settings://Settings
+						newPage = new iMLNavigationPage(new SettingsPage());
+						break;
 				}
 			}
 
