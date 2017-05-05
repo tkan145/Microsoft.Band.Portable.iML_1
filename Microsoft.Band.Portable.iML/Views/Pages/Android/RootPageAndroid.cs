@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using FormsToolkit;
 using Xamarin.Forms;
 
 namespace Microsoft.Band.Portable.iML.Views
@@ -8,6 +10,8 @@ namespace Microsoft.Band.Portable.iML.Views
 	public class RootPageAndroid : MasterDetailPage
 	{
 		Dictionary<int, iMLNavigationPage> pages;
+		DeepLinkPage page;
+		bool isRunning = false;
 
 		//bool isRunning = false;
 		public RootPageAndroid()
@@ -24,6 +28,7 @@ namespace Microsoft.Band.Portable.iML.Views
 			iMLNavigationPage newPage = null;
 			if (!pages.ContainsKey(menuId))
 			{
+				Debug.WriteLine("menuID {0}", menuId);
 				//only cache specific pages
 				switch (menuId)
 				{

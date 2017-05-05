@@ -1,5 +1,123 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Microsoft.Band.Portable.iML.SettingsPage">
-	<ContentPage.Content>
-	</ContentPage.Content>
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+	x:Class="Microsoft.Band.Portable.iML.Views.SettingsPage"
+	Title="Settings"
+	BackgroundColor="{DynamicResource WindowBackgroundTable}">
+	<ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String" Android="Settings" WinPhone="Settings" iOS="About this app"/>
+    </ContentPage.Title>
+	<local:AlwaysScrollView Grid.RowSpan="2">
+		<StackLayout Spacing="0">
+			<StackLayout 
+                BackgroundColor="{DynamicResource WindowBackgroundTable}"
+                Spacing="{DynamicResource CardSpacing}"
+                Padding="{DynamicResource CardPadding}">
+				<local:CardView>
+					<!--Band information-->
+					<local:CardView.IsVisible>
+                        <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="false" WinPhone="true"/>
+                    </local:CardView.IsVisible>
+                     <StackLayout Spacing="0" StyleId="2.4GHzCard">
+                        <local:LabelSection Text="Band Information"/>
+                        <local:HeaderDivider/>  
+                        <Grid Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout>
+                                <Label Text="ID" Style="{DynamicResource iMLListItemTextStyle}"/>
+                                <Label Text="{Binding Settings.WiFiSSID}"
+                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+                                        StyleId="2.4GHzSSID"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1">
+                                <Label Text="Firmware" Style="{DynamicResource iMLListItemTextStyle}"/>
+                                <Label Text="{Binding Settings.WiFiPass}"
+                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+                                        StyleId="2.4GHzPassword"/>
+                            </StackLayout>
+
+                        </Grid>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+
+                <local:CardView>
+					<!--Sensors-->
+                    <local:CardView.IsVisible>
+                        <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="false" WinPhone="true"/>
+                    </local:CardView.IsVisible>
+                     <StackLayout Spacing="0">
+                        <local:LabelSection Text="Sensors"/>
+                        <local:HeaderDivider/>   
+                        <StackLayout BackgroundColor="White" 
+                                     Padding="{StaticResource StandardPadding}">
+                            <Label Text="Enable and configure sensors here." 
+                                   HorizontalOptions="Center" 
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+                            
+                        </StackLayout>  
+                        <local:SectionDivider/>
+                      <local:NonScrollableListView 
+                            x:Name="ListViewSensor"
+                            ItemsSource="{Binding SensorItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" 
+                                               Detail="{Binding Subtitle}" 
+                                               Command="{Binding Command}" 
+                                               CommandParameter="{Binding Parameter}" 
+                                               StyleId="disclosure"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+				
+				<local:CardView>
+                     <StackLayout Spacing="0">
+                        <local:LabelSection>
+                            <local:LabelSection.Text>
+                                <OnPlatform x:TypeArguments="x:String" Android="About the App" iOS=" " WinPhone="About the App"/>
+                            </local:LabelSection.Text>
+                        </local:LabelSection>
+                        <local:HeaderDivider/>
+                        <local:NonScrollableListView 
+                            x:Name="ListViewAbout"
+                            ItemsSource="{Binding AboutItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" 
+                                               Detail="{Binding Subtitle}" 
+                                               Command="{Binding Command}" 
+                                               CommandParameter="{Binding Parameter}" 
+                                               StyleId="disclosure"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                        <StackLayout>
+                            <StackLayout.Padding>
+                                <OnPlatform x:TypeArguments="Thickness" iOS="16,8,16,0" Android="16,8" WinPhone="16,8"/>
+                            </StackLayout.Padding>
+                            <Label Text="Copyright 2017 - QUT." 
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </local:CardView>
+			</StackLayout>
+		</StackLayout>
+	</local:AlwaysScrollView>
 </ContentPage>

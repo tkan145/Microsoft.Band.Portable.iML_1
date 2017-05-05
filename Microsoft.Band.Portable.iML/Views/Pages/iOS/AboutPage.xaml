@@ -88,7 +88,7 @@
 				
                	<local:CardView>
                      <StackLayout Spacing="0">
-                        <local:LabelSection Text="Conference Info"/>
+                        <local:LabelSection Text="Project Info"/>
                         <local:HeaderDivider/>
                         <local:NonScrollableListView 
                             x:Name="ListViewInfo"

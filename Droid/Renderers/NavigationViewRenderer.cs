@@ -24,6 +24,7 @@ namespace Microsoft.Band.Portable.iML.Droid
 			navView = view.JavaCast<NavigationView>();
 
 			navView.NavigationItemSelected += NavView_NavigationItemSelected;
+
 			SetNativeControl(navView);
 
 			var header = navView.GetHeaderView(0);
@@ -41,7 +42,6 @@ namespace Microsoft.Band.Portable.iML.Droid
 		void NavView_NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
 		{
 
-
 			if (previousItem != null)
 				previousItem.SetChecked(false);
 
@@ -53,18 +53,20 @@ namespace Microsoft.Band.Portable.iML.Droid
 			switch (e.MenuItem.ItemId)
 			{
 				case Resource.Id.nav_feed:
-                    id = (int)AppPage.Dashboard;
+					id = (int)AppPage.Dashboard;
+					Console.WriteLine("id {0}:", id);
 					break;
-				
+
 				case Resource.Id.nav_settings:
 					id = (int)AppPage.Settings;
+					Console.WriteLine("id {0}:", id);
 					break;
 			}
 			this.Element.OnNavigationItemSelected(new Microsoft.Band.Portable.iML.Views.NavigationItemSelectedEventArgs
 			{
-
 				Index = id
 			});
+
 		}
 
 	}

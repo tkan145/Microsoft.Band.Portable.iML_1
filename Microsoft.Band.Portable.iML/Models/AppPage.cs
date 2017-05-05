@@ -9,8 +9,8 @@ namespace Microsoft.Band.Portable.iML
 	}
 	public enum AppPage
 	{
+		Dashboard,
 		Settings,
-		Dashboard
 	}
 }
 
