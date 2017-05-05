@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:imagecircle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+             xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+             xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+             x:Class="Microsoft.Band.Portable.iML.Views.AboutPage"
+             x:Name="AboutPage"
+             Title="Info"
+             Icon="tab_about.png"
+             NavigationPage.BackButtonTitle="Info"
+             BackgroundColor="{DynamicResource WindowBackgroundTable}">
+	<local:AlwaysScrollView  Grid.RowSpan="2">
+        <StackLayout Spacing="0"> 
+			<StackLayout 
+                BackgroundColor="{DynamicResource WindowBackgroundTable}"
+                Spacing="{DynamicResource CardSpacing}"
+                Padding="{DynamicResource CardPadding}">
+
+                <local:CardView>
+                     <StackLayout Spacing="0">
+                        <local:LabelSection Text="My Band"/>
+                        <local:HeaderDivider/>
+                        <local:NonScrollableListView 
+                            x:Name="ListViewBandInfo"
+                            ItemsSource="{Binding BandItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:TextViewValue Text="{Binding Name}"
+                                                Detail="{Binding Subtitle}"
+                                                Command="{Binding Command}"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+
+                <local:CardView Padding="0,32,0,0">
+                     <StackLayout Spacing="0">
+                        <local:HeaderDivider/>
+                        <local:NonScrollableListView 
+                            x:Name="ListViewSensor"
+                            ItemsSource="{Binding SensorItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" 
+                                               StyleId="disclosure"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                        <StackLayout Padding="16,8,16,0">
+                            <Label Text="Enable and configure all of sensors here." 
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+                        </StackLayout>
+                    </StackLayout>
+                </local:CardView>
+				
+                 <local:CardView Padding="0,32,0,0">
+                     <StackLayout Spacing="0">
+                        <local:HeaderDivider/>
+                        <local:NonScrollableListView 
+                            x:Name="ListViewAbout"
+                            ItemsSource="{Binding AboutItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" 
+                                               StyleId="disclosure"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+				
+               	<local:CardView>
+                     <StackLayout Spacing="0">
+                        <local:LabelSection Text="Project Info"/>
+                        <local:HeaderDivider/>
+                        <local:NonScrollableListView 
+                            x:Name="ListViewInfo"
+                            ItemsSource="{Binding InfoItems}"
+                            RowHeight="44"> 
+                            <local:NonScrollableListView.SeparatorColor>
+                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                            </local:NonScrollableListView.SeparatorColor>
+                            <local:NonScrollableListView.ItemTemplate>
+                                <DataTemplate>
+                                    <TextCell Text="{Binding Name}" 
+                                               StyleId="disclosure"/>
+                                </DataTemplate>
+                            </local:NonScrollableListView.ItemTemplate>
+                        </local:NonScrollableListView>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+			</StackLayout>
+		</StackLayout>
+	</local:AlwaysScrollView>
+</ContentPage>
