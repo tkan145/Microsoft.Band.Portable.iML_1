@@ -106,6 +106,15 @@
     <Reference Include="FormsToolkit.iOS">
       <HintPath>..\packages\FormsToolkit.1.1.18\lib\Xamarin.iOS10\FormsToolkit.iOS.dll</HintPath>
     </Reference>
+    <Reference Include="ImageCircle.Forms.Plugin.Abstractions">
+      <HintPath>..\packages\Xam.Plugins.Forms.ImageCircle.1.8.1\lib\Xamarin.iOS10\ImageCircle.Forms.Plugin.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageCircle.Forms.Plugin.iOS">
+      <HintPath>..\packages\Xam.Plugins.Forms.ImageCircle.1.8.1\lib\Xamarin.iOS10\ImageCircle.Forms.Plugin.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="MvvmHelpers">
+      <HintPath>..\packages\Refractored.MvvmHelpers.1.2.2\lib\portable-net45+wp80+win8+wpa81\MvvmHelpers.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Band.Portable.iML\Microsoft.Band.Portable.iML.csproj">
@@ -132,6 +141,42 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Helpers\Settings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\Default-568h%402x.png" />
+    <BundleResource Include="Resources\Default-667h%402x.png" />
+    <BundleResource Include="Resources\Default-736h%403x.png" />
+    <BundleResource Include="Resources\Default.png" />
+    <BundleResource Include="Resources\Default%402x.png" />
+    <BundleResource Include="Resources\heroplaceholder.png" />
+    <BundleResource Include="Resources\Icon.png" />
+    <BundleResource Include="Resources\Icon%402x.png" />
+    <BundleResource Include="Resources\Icon%403x.png" />
+    <BundleResource Include="Resources\quickaction_announcements%402x.png" />
+    <BundleResource Include="Resources\quickaction_announcements%403x.png" />
+    <BundleResource Include="Resources\quickaction_events%402x.png" />
+    <BundleResource Include="Resources\quickaction_events%403x.png" />
+    <BundleResource Include="Resources\quickaction_mini-hacks%402x.png" />
+    <BundleResource Include="Resources\quickaction_mini-hacks%403x.png" />
+    <BundleResource Include="Resources\quickaction_tweet%402x.png" />
+    <BundleResource Include="Resources\quickaction_tweet%403x.png" />
+    <BundleResource Include="Resources\tab_about_selected.png" />
+    <BundleResource Include="Resources\tab_about_selected%402x.png" />
+    <BundleResource Include="Resources\tab_about_selected%403x.png" />
+    <BundleResource Include="Resources\tab_about.png" />
+    <BundleResource Include="Resources\tab_about%402x.png" />
+    <BundleResource Include="Resources\tab_about%403x.png" />
+    <BundleResource Include="Resources\toolbar_overflow.png" />
+    <BundleResource Include="Resources\toolbar_overflow%402x.png" />
+    <BundleResource Include="Resources\toolbar_overflow%403x.png" />
+    <BundleResource Include="Resources\toolbar_share.png" />
+    <BundleResource Include="Resources\toolbar_share%402x.png" />
+    <BundleResource Include="Resources\toolbar_share%403x.png" />
+    <BundleResource Include="Resources\Chart Filled.png" />
+    <BundleResource Include="Resources\Chart.png" />
+    <BundleResource Include="Resources\Settings.png" />
+    <BundleResource Include="Resources\Trash-30.png" />
+    <BundleResource Include="Resources\Trash-64.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

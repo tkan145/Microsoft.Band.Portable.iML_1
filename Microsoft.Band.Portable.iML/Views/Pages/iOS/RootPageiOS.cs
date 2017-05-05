@@ -8,6 +8,7 @@ namespace Microsoft.Band.Portable.iML.Views
 		{
 			NavigationPage.SetHasNavigationBar(this, false);
 			Children.Add(new MainNavigationPage(new DashboardPage()));
+			Children.Add(new MainNavigationPage(new AboutPage()));
 		}
 	}
 }
