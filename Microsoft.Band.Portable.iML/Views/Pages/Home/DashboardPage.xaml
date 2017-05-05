@@ -1,7 +1,231 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="Microsoft.Band.Portable.iML.Views.DashboardPage">
-    <ContentPage.Content>
-    </ContentPage.Content>
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+	xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+	xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+	xmlns:pull="clr-namespace:Refractored.XamForms.PullToRefresh;assembly=Refractored.XamForms.PullToRefresh"
+	xmlns:imagecircle="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin.Abstractions"
+    x:Class="Microsoft.Band.Portable.iML.Views.DashboardPage"
+	Icon="Chart Filled" Title="Dashboard"
+	BackgroundColor="{DynamicResource WindowBackgroundTable}">
+    <ContentPage.Resources>
+     <ResourceDictionary>
+        <toolkit:InvertedBooleanConverter x:Key="InvertedBooleanConverter" />
+     </ResourceDictionary>
+    </ContentPage.Resources>
+	<ContentPage.ToolbarItems>
+        <ToolbarItem  Text="New Model" Command="{Binding AddModelCommand}"/>
+    </ContentPage.ToolbarItems>
+	<pull:PullToRefreshLayout
+          IsPullToRefreshEnabled="True"
+          RefreshCommand="{Binding RefreshCommand}"
+          IsRefreshing="{Binding IsBusy}"> 
+          <pull:PullToRefreshLayout.RefreshColor>
+            <OnPlatform x:TypeArguments="Color" Android="{StaticResource Primary}"/>
+          </pull:PullToRefreshLayout.RefreshColor>
+	<local:AlwaysScrollView HorizontalOptions="FillAndExpand"
+          					VerticalOptions="FillAndExpand">
+			<StackLayout Spacing="{DynamicResource CardSpacing}"
+                		Padding="{DynamicResource CardPadding}">
+				<local:CardView>
+					<!--Bands Connection-->
+					<StackLayout Spacing="0">
+						<Grid>
+                        	<Grid.ColumnDefinitions>
+                            	<ColumnDefinition Width="*"/>
+                            	<ColumnDefinition Width="34"/>
+                        	</Grid.ColumnDefinitions>
+                        	<local:LabelSection Text="Microsoft Band Configuration"/>
+                   	 	</Grid>
+						<local:HeaderDivider/>
+						<StackLayout IsVisible="{Binding LoadingBands}" 
+                                 	HorizontalOptions="FillAndExpand" 
+                                 	VerticalOptions="Center" 
+                                  	BackgroundColor="White"
+                                  	Padding="{StaticResource StandardPadding}">
+                        	<ActivityIndicator IsRunning="{Binding LoadingBands}">
+                            	<ActivityIndicator.Color>
+                                	<OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+                            	</ActivityIndicator.Color>
+                        	</ActivityIndicator>
+                        	<Label 	Text="Loading Bands..." 
+									HorizontalOptions="Center" 
+                               		Style="{DynamicResource iMLListItemTextStyle}"/>
+                  		</StackLayout>
+						<Grid IsVisible="{Binding LoadingBands, Converter={StaticResource InvertedBooleanConverter}}}" Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+							<Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+							<StackLayout>
+                                <Label 	HorizontalOptions="Center" 
+										Text="Paired Band" 
+										Style="{DynamicResource iMLListItemTextStyle}"/>
+                                <Label 	HorizontalOptions="Center" 
+										Text="{Binding PariedBand}"
+                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+                                        StyleId="2.4GHzSSID"/>
+                            </StackLayout>
+							<StackLayout Grid.Column="1">
+                                <Label 	HorizontalOptions="Center" 
+										Text="Status" 
+										Style="{DynamicResource iMLListItemTextStyle}"/>
+                                <Label Text="{Binding Status}"
+										HorizontalOptions="Center"
+                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+                                        StyleId="2.4GHzPassword"/>
+                            </StackLayout>
+						</Grid>
+						<local:SectionDivider/>
+						<StackLayout Padding="{StaticResource StandardPadding}" 
+                                Spacing="{StaticResource MediumSpacing}" 
+                               BackgroundColor="White">
+                            <StackLayout.IsVisible>
+                                <OnPlatform x:TypeArguments="x:Boolean" iOS="true" Android="true" WinPhone="false"/>
+                            </StackLayout.IsVisible>
+                            <Button Text="Setup Connection"
+                                    Command="{Binding ConfigureBandCommand}"
+                                    BackgroundColor="{StaticResource PrimaryDark}"
+                                    IsEnabled="{Binding FoundBands}"
+                                    TextColor="White"
+                                    StyleId="2.4GHzSetUpButton"/>
+                            <Label Text="{Binding StatusMessage}" HorizontalOptions="Center" 
+                                   
+                                   Style="{DynamicResource EvolveListItemDetailTextStyle}"
+                                   StyleId="2.4GHzSuccessText"/>
+                         </StackLayout>
+						<local:FooterDivider/>
+					</StackLayout>
+				</local:CardView>
+				
+				<local:CardView>
+					<!--Calibration-->
+                    <local:CardView.IsVisible>
+                        <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="true" WinPhone="true"/>
+                    </local:CardView.IsVisible>
+                     <StackLayout Spacing="0">
+                        <local:LabelSection Text="Calibration"/>
+                        <local:HeaderDivider/>   
+                        <StackLayout BackgroundColor="White" 
+                                     Padding="{StaticResource StandardPadding}">
+                            <Label Text="Do some calibration here."
+                                   HorizontalOptions="Center" 
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+                            
+                        </StackLayout>  
+                    	<local:SectionDivider/>
+						  <StackLayout BackgroundColor="#072339" 
+                                     Padding="{StaticResource StandardPadding}" HeightRequest="300">
+                            <chart:SfChart Margin="10" x:Name="sfChart" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+								<chart:SfChart.Legend>
+
+									<chart:ChartLegend ToggleSeriesVisibility="true">
+									<chart:ChartLegend.LabelStyle>
+                   						<chart:ChartLegendLabelStyle TextColor="White" />
+         							 	</chart:ChartLegend.LabelStyle>
+									</chart:ChartLegend>
+								</chart:SfChart.Legend>
+                            	<chart:SfChart.Title>
+
+									<chart:ChartTitle Text="Calibration" TextColor="White"/>
+
+								</chart:SfChart.Title> 
+								<chart:SfChart.PrimaryAxis>
+                					<chart:CategoryAxis/>
+           						 </chart:SfChart.PrimaryAxis>
+
+            					<chart:SfChart.SecondaryAxis>
+               						 <chart:NumericalAxis Minimum="-10" Maximum="10"/>
+            					</chart:SfChart.SecondaryAxis>
+           						<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding XData}" XBindingPath="XAxis" YBindingPath="Value"/>
+								<chart:FastLineSeries Label="Y" x:Name="YAxis" ItemsSource ="{Binding YData}" XBindingPath="YAxis" YBindingPath="Value"/>
+								<chart:FastLineSeries Label="Z" x:Name="ZAxis" ItemsSource ="{Binding ZData}" XBindingPath="ZAxis" YBindingPath="Value"/>
+       						 </chart:SfChart>          
+                        </StackLayout> 
+						<local:SectionDivider/>
+                        <Grid Padding="{StaticResource StandardPadding}" 
+                               ColumnSpacing="{StaticResource StandardSpacing}" 
+                               BackgroundColor="White">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+								
+                            </Grid.ColumnDefinitions>
+                            <Button Text="Up" Command="{Binding LoginCommand}"
+                                    BackgroundColor="{StaticResource PrimaryDark}"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TextColor="White"/>
+							
+                            <Button Grid.Column="2"
+                                    Text="Down" Command="{Binding SyncCommand}"
+                                    BackgroundColor="{StaticResource PrimaryDark}"
+                                    IsEnabled="{Binding IsNotBusy}"
+                                    TextColor="White"/>
+                         </Grid>
+                        <local:SectionDivider/>
+                        <local:FooterDivider/>
+                    </StackLayout>
+                </local:CardView>
+
+
+				<local:CardView>
+                 <!--Report-->
+                 <StackLayout Spacing="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="34"/>
+                        </Grid.ColumnDefinitions>
+                        <local:LabelSection Text="Models"/>
+                    </Grid>
+                    <local:HeaderDivider/>
+                    <StackLayout IsVisible="{Binding LoadingModels}" 
+                                 HorizontalOptions="FillAndExpand" 
+                                 VerticalOptions="Center" 
+                                  BackgroundColor="White"
+                                  Padding="{StaticResource StandardPadding}">
+                        <ActivityIndicator IsRunning="{Binding LoadingModels}">
+                            <ActivityIndicator.Color>
+                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+                            </ActivityIndicator.Color>
+                        </ActivityIndicator>
+                        <Label Text="Loading Models..." 
+                               HorizontalOptions="Center" 
+                               Style="{DynamicResource iMLListItemTextStyle}"/>
+                   </StackLayout>
+                   <StackLayout IsVisible="{Binding NoModels}" 
+                                 HorizontalOptions="FillAndExpand" 
+                                 VerticalOptions="Center" 
+                                 BackgroundColor="White"
+                                 Padding="{StaticResource StandardPadding}">
+                       
+                        <Label Text="Unable to load models"
+                               HorizontalOptions="Center" 
+                               Style="{DynamicResource iMLListItemTextStyle}"/>
+                   </StackLayout>
+                    <local:NonScrollableListView 
+                        x:Name="ListViewModels"
+                        SelectedItem="{Binding SelectedModel, Mode=TwoWay}"
+                        ItemsSource="{Binding Models}">
+                        <local:NonScrollableListView.SeparatorColor>
+                            <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}" WinPhone="{StaticResource ListSeparator}"/>
+                        </local:NonScrollableListView.SeparatorColor>
+                        <local:NonScrollableListView.RowHeight>
+                            <OnPlatform x:TypeArguments="x:Int32" Android="145" iOS="140" WinPhone="155"/>
+                        </local:NonScrollableListView.RowHeight>
+                        <local:NonScrollableListView.ItemTemplate>
+                             <DataTemplate>
+                              <ViewCell >
+                                <local:ModelCell/>
+                              </ViewCell>
+                            </DataTemplate>
+                        </local:NonScrollableListView.ItemTemplate>
+                    </local:NonScrollableListView>
+                    <local:FooterDivider/>
+                </StackLayout>
+            </local:CardView>
+			</StackLayout>
+	</local:AlwaysScrollView>
+	</pull:PullToRefreshLayout>
 </ContentPage>

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using FormsToolkit.iOS;
 using Foundation;
+using Refractored.XamForms.PullToRefresh.iOS;
+using Syncfusion.SfChart.XForms.iOS.Renderers;
 using UIKit;
 
 namespace Microsoft.Band.Portable.iML.iOS
@@ -13,6 +15,8 @@ namespace Microsoft.Band.Portable.iML.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
+			new SfChartRenderer();
+			PullToRefreshLayoutRenderer.Init();
 			Toolkit.Init();
 			ImageCircle.Forms.Plugin.iOS.ImageCircleRenderer.Init();
 			LoadApplication(new App());

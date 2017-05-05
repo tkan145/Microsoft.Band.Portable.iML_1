@@ -121,6 +121,15 @@
     <Reference Include="FormsToolkit">
       <HintPath>..\packages\FormsToolkit.1.1.18\lib\MonoAndroid10\FormsToolkit.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms.Android">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfChart.15.1.0.41\lib\MonoAndroid10\Syncfusion.SfChart.XForms.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.XForms">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfChart.15.1.0.41\lib\MonoAndroid10\Syncfusion.SfChart.XForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.SfChart.Android">
+      <HintPath>..\packages\Syncfusion.Xamarin.SfChart.Android.15.1.0.41\lib\MonoAndroid10\Syncfusion.SfChart.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Band.Portable.iML\Microsoft.Band.Portable.iML.csproj">
