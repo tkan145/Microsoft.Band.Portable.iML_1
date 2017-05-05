@@ -14,6 +14,9 @@ namespace Microsoft.Band.Portable.iML
 
 			switch (Device.RuntimePlatform)
 			{
+				case Device.iOS:
+					MainPage = new MainNavigationPage(new RootPageiOS());
+					break;
 				case Device.Android:
 					MainPage = new RootPageAndroid();
 					break;

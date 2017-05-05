@@ -62,6 +62,8 @@
     <Compile Include="Views\Pages\Info\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Pages\iOS\RootPageiOS.cs" />
+    <Compile Include="Views\Controls\MainNavigationPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -91,13 +93,12 @@
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\New Folder\" />
     <Folder Include="Views\Pages\" />
     <Folder Include="Views\Controls\" />
-    <Folder Include="Views\New Folder1\" />
     <Folder Include="Views\Pages\Android\" />
     <Folder Include="Views\Pages\Home\" />
     <Folder Include="Views\Pages\Info\" />
+    <Folder Include="Views\Pages\iOS\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
