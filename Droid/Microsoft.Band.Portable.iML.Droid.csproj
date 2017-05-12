@@ -136,6 +136,12 @@
     <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
       <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Band.Android">
+      <HintPath>..\packages\Xamarin.Microsoft.Band.Native.1.3.10.1\lib\MonoAndroid\Microsoft.Band.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Band.Portable">
+      <HintPath>..\packages\Xamarin.Microsoft.Band.1.3.10.1\lib\MonoAndroid\Microsoft.Band.Portable.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Band.Portable.iML\Microsoft.Band.Portable.iML.csproj">
