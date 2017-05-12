@@ -54,6 +54,9 @@
     <EmbeddedResource Include="Views\Controls\SectionDivider.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pages\Home\ReportDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -98,6 +101,15 @@
     </Compile>
     <Compile Include="Views\Cell\TextViewValue.cs" />
     <Compile Include="Views\Controls\CardView.cs" />
+    <Compile Include="ViewModels\DashboardViewModel.cs" />
+    <Compile Include="Helpers\NavigationService.cs" />
+    <Compile Include="Views\Pages\Home\ReportDetailsPage.xaml.cs">
+      <DependentUpon>ReportDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\iMLModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Helpers\MessagingUtils.cs" />
+    <Compile Include="Helpers\Constants.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

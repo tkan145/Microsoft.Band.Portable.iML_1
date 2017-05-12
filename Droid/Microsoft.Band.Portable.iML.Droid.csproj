@@ -130,6 +130,12 @@
     <Reference Include="Syncfusion.SfChart.Android">
       <HintPath>..\packages\Syncfusion.Xamarin.SfChart.Android.15.1.0.41\lib\MonoAndroid10\Syncfusion.SfChart.Android.dll</HintPath>
     </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.dll</HintPath>
+    </Reference>
+    <Reference Include="Refractored.XamForms.PullToRefresh.Droid">
+      <HintPath>..\packages\Refractored.XamForms.PullToRefresh.1.1.0\lib\MonoAndroid10\Refractored.XamForms.PullToRefresh.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Band.Portable.iML\Microsoft.Band.Portable.iML.csproj">

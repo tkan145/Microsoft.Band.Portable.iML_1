@@ -92,7 +92,7 @@
                                     StyleId="2.4GHzSetUpButton"/>
                             <Label Text="{Binding StatusMessage}" HorizontalOptions="Center" 
                                    
-                                   Style="{DynamicResource EvolveListItemDetailTextStyle}"
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"
                                    StyleId="2.4GHzSuccessText"/>
                          </StackLayout>
 						<local:FooterDivider/>
