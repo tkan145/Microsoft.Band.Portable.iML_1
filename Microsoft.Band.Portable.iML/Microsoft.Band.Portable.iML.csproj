@@ -113,7 +113,6 @@
     </Compile>
     <Compile Include="Views\Cell\TextViewValue.cs" />
     <Compile Include="Views\Controls\CardView.cs" />
-    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="Models\iMLModel.cs" />
     <Compile Include="Helpers\MessagingUtils.cs" />
@@ -151,12 +150,16 @@
     <Compile Include="FileService.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="IFileService.cs" />
-    <Compile Include="ViewModels\DashboardViewModel.cs" />
     <Compile Include="DataStore\Abstraction\IStoreManager.cs" />
     <Compile Include="DataStore\Abstraction\IModelStore.cs" />
     <Compile Include="DataStore\Abstraction\ILogStore.cs" />
     <Compile Include="DataStore\Abstraction\ICategoryStore.cs" />
     <Compile Include="DataStore\Abstraction\IBaseStore.cs" />
+    <Compile Include="DataStore\Mock\BaseStore.cs" />
+    <Compile Include="DataStore\Mock\LogStore.cs" />
+    <Compile Include="DataStore\Mock\ModelStore.cs" />
+    <Compile Include="DataStore\Mock\SensorCategoryStore.cs" />
+    <Compile Include="DataStore\Mock\StoreManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">

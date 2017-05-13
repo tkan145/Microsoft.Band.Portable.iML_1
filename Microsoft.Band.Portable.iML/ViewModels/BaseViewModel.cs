@@ -124,13 +124,13 @@ namespace Microsoft.Band.Portable.iML
 
 		public static void Init(bool mock = true)
 		{
-			//if (mock)
-			//{
-			//	DependencyService.Register<IModelStore, DataStore.Mock.ModelStore>();
-			//	DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
-			//	DependencyService.Register<ILogStore, DataStore.Mock.LogStore>();
-			//	DependencyService.Register<IStoreManager, DataStore.Mock.StoreManager>();
-			//}
+			if (mock)
+			{
+				DependencyService.Register<IModelStore, DataStore.Mock.ModelStore>();
+				DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
+				DependencyService.Register<ILogStore, DataStore.Mock.LogStore>();
+				DependencyService.Register<IStoreManager, DataStore.Mock.StoreManager>();
+			}
 			//else
 			//{
 			//	//DependencyService.Register<IModelStore, DataStore.Offline.ModelStore>();

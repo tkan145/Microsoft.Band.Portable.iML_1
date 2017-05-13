@@ -5,6 +5,6 @@ namespace Microsoft.Band.Portable.iML.DataStore.Abstractions
 {
 	public interface IModelStore : IBaseStore<iMLModel>
 	{
-		Task DropModel();
+		//Task DropModel();
 	}
 }

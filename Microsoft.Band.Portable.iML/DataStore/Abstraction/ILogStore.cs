@@ -5,7 +5,7 @@ namespace Microsoft.Band.Portable.iML.DataStore.Abstractions
 {
 	public interface ILogStore : IBaseStore<Log>
 	{
-		Task<bool> AddLog(iMLModel model);
+		//Task<bool> AddLog(iMLModel model);
 	}
 }
 
