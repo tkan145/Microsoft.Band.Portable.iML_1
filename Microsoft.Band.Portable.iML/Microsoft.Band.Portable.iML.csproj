@@ -63,6 +63,9 @@
     <EmbeddedResource Include="Views\Cell\PickerCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pages\Info\SensorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -127,6 +130,13 @@
       <DependentUpon>PickerCell.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\NewAIViewModel.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
+    <Compile Include="Helpers\Grouping.cs" />
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="Views\Pages\Info\SensorPage.xaml.cs">
+      <DependentUpon>SensorPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -185,6 +195,9 @@
     <Folder Include="Views\Pages\iOS\" />
     <Folder Include="Views\Cell\" />
     <Folder Include="BandConnection\" />
+    <Folder Include="DataStore\" />
+    <Folder Include="DataStore\Abstraction\" />
+    <Folder Include="DataStore\Mock\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
