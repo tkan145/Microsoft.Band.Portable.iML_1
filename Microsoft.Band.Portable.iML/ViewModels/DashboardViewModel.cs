@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Windows.Input;
 using System.Collections.Generic;
-using MvvmHelpers;
+//using MvvmHelpers;
 using Xamarin.Forms;
 using Syncfusion.SfChart.XForms;
 using System.Threading.Tasks;
+using FormsToolkit;
+using GalaSoft.MvvmLight.Command;
+using System.Linq;
+using GalaSoft.MvvmLight;
+using System.Diagnostics;
 
 namespace Microsoft.Band.Portable.iML
 {
-	public class DashboardViewModel : ViewModelBase
+	public class DashboardViewModel : BaseViewModel
 	{
+		private BandConnection band;
 		public DashboardViewModel(INavigation navigation) : base(navigation)
 		{
 			NextForceRefresh = DateTime.UtcNow.AddMinutes(30);
+			Bands = new ObservableRangeCollection<BandDeviceInfo>();
+
+			band = App.current.Bands;
+
 
 			// Chart data
 			XData = new ObservableRangeCollection<ChartDataPoint>();
@@ -56,14 +66,15 @@ namespace Microsoft.Band.Portable.iML
 		public DateTime NextForceRefresh { get; set; }
 		public ObservableRangeCollection<iMLModel> Models { get; } = new ObservableRangeCollection<iMLModel>();
 		public IEnumerable<iMLModel> _models { get; }
+		public ObservableRangeCollection<BandDeviceInfo> Bands { get; private set; }
 		public ObservableRangeCollection<ChartDataPoint> XData { get; set; }
 		public ObservableRangeCollection<ChartDataPoint> YData { get; set; }
 		public ObservableRangeCollection<ChartDataPoint> ZData { get; set; }
 
 		#region Commands
-		ICommand refreshCommand;
-		public ICommand RefreshCommand =>
-		refreshCommand ?? (refreshCommand = new Command(async () => await ExecuteRefreshCommandAsync()));
+		RelayCommand refreshCommand;
+		public RelayCommand RefreshCommand =>
+		refreshCommand ?? (refreshCommand = new RelayCommand(async () => await ExecuteRefreshCommandAsync()));
 
 		async Task ExecuteRefreshCommandAsync()
 		{
@@ -72,7 +83,7 @@ namespace Microsoft.Band.Portable.iML
 				IsBusy = true;
 				var tasks = new Task[]
 				{
-						//ExecuteLoadBandsCommandAsync(),
+						ExecuteLoadBandsCommandAsync(),
 						//ExecuteLoadModelsCommandAsync()
 					};
 
@@ -88,9 +99,9 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
-		ICommand addModelCommand;
-		public ICommand AddModelCommand =>
-		addModelCommand ?? (addModelCommand = new Command(async () => await ExecuteAddModelCommandAsync()));
+		RelayCommand addModelCommand;
+		public RelayCommand AddModelCommand =>
+		addModelCommand ?? (addModelCommand = new RelayCommand(async () => await ExecuteAddModelCommandAsync()));
 
 		async Task ExecuteAddModelCommandAsync()
 		{
@@ -99,16 +110,16 @@ namespace Microsoft.Band.Portable.iML
 			//Navigation.PushAsync(page
 		}
 
-		ICommand loadBandsCommand;
-		public ICommand LoadBandsCommand =>
-		loadBandsCommand ?? (loadBandsCommand = new Command(async () => await ExecuteLoadBandsCommandAsync()));
+		RelayCommand loadBandsCommand;
+		public RelayCommand LoadBandsCommand =>
+		loadBandsCommand ?? (loadBandsCommand = new RelayCommand(async () => await ExecuteLoadBandsCommandAsync()));
 
 		async Task ExecuteLoadBandsCommandAsync()
 		{
 			if (LoadingBands)
 				return;
 			LoadingBands = true;
-			FoundBands = BandConfigured = false;
+			FoundBands = BandConfigured = true;
 #if DEBUG
 			await Task.Delay(1000);
 #endif
@@ -116,10 +127,10 @@ namespace Microsoft.Band.Portable.iML
 			try
 			{
 				//var connection = App.current.Bands;
-				//await connection.ConnectBands();
-				//this.StatusMessage = connection.StatusMessage;
-				//this.PairedBand = connection.BandName;
-				//this.Status = connection.BandConnectionStatus;
+				await band.FindBands();
+				this.StatusMessage = band.StatusMessage;
+				this.PairedBand = band.BandName;
+				this.Status = band.BandConnectionStatus;
 
 			}
 			catch (Exception ex)
@@ -132,9 +143,9 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
-		ICommand loadModelsCommand;
-		public ICommand LoadModelsCommand =>
-		loadModelsCommand ?? (loadModelsCommand = new Command(async () => await ExecuteLoadModelsCommandAsync()));
+		RelayCommand loadModelsCommand;
+		public RelayCommand LoadModelsCommand =>
+		loadModelsCommand ?? (loadModelsCommand = new RelayCommand(async () => await ExecuteLoadModelsCommandAsync()));
 
 		async Task ExecuteLoadModelsCommandAsync()
 		{
@@ -146,7 +157,7 @@ namespace Microsoft.Band.Portable.iML
 			{
 				NoModels = false;
 				Models.Clear();
-				OnPropertyChanged("Models");
+				RaisePropertyChanged("Models");
 
 #if DEBUG
 				await Task.Delay(1000);
@@ -160,7 +171,7 @@ namespace Microsoft.Band.Portable.iML
 			}
 			catch (Exception ex)
 			{
-				NoModels = true;
+				MessagingService.Current.SendMessage(MessageKeys.Error, ex);
 			}
 			finally
 			{
@@ -168,13 +179,47 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
-		ICommand configureBandCommand;
-		public ICommand ConfigureBandCommand =>
-		configureBandCommand ?? (configureBandCommand = new Command(async () => await ExecuteConnectCommand()));
+		RelayCommand configureBandCommand;
+		public RelayCommand ConfigureBandCommand =>
+		configureBandCommand ?? (configureBandCommand = new RelayCommand(async () => await ExecuteConnectCommand()));
 
 		async Task ExecuteConnectCommand()
 		{
-			//await App.current.Bands.ConnectBands();
+			//if (band.bandClient.IsConnected)
+			//{
+			//	try
+			//	{
+			//		await band.DisconnectBand();
+			//	}
+			//	catch (Exception ex)
+			//	{
+			//		this.statusMessage = "Disconnect" + ex;
+			//	}
+			//}
+			//else
+			//{
+			//try
+			//{
+			// Connect must be called on a background thread.
+			//var result =
+			await band.ConnectBands();
+
+			//// callback that must be handled on the UI thread
+			//if (result != band.bandClient.IsConnected)
+			//{
+			//	this.statusMessage = "Connection failed: result=" + result;
+			//	return;
+			//}
+			this.StatusMessage = band.StatusMessage;
+			this.ButtonText = "Disconnect the Band";
+			this.Status = band.BandConnectionStatus;
+			//}
+			//catch (Exception ex)
+			//{
+			//	this.StatusMessage = "Connect" + ex;
+			//} 
+			//}
+
 		}
 		#endregion
 
@@ -184,41 +229,48 @@ namespace Microsoft.Band.Portable.iML
 		public bool LoadingBands
 		{
 			get { return loadingBands; }
-			set { SetProperty(ref loadingBands, value); }
+			set { Set(ref loadingBands, value); }
 		}
 		string statusMessage;
 		public string StatusMessage
 		{
 			get { return statusMessage; }
-			set { SetProperty(ref statusMessage, value); }
+			set { Set(ref statusMessage, value); }
 		}
 
 		bool foundBands;
 		public bool FoundBands
 		{
 			get { return foundBands; }
-			set { SetProperty(ref foundBands, value); }
+			set { Set(ref foundBands, value); }
 		}
 
 		string status;
 		public string Status
 		{
 			get { return status; }
-			set { SetProperty(ref status, value); }
+			set { Set(ref status, value); }
 		}
 
 		string pariedBand;
 		public string PairedBand
 		{
 			get { return pariedBand; }
-			set { SetProperty(ref pariedBand, value); }
+			set { Set(ref pariedBand, value); }
+		}
+
+		string buttonText = "Setup Connection";
+		public string ButtonText
+		{
+			get { return buttonText; }
+			set { Set(ref buttonText, value); }
 		}
 
 		bool bandConfigured;
 		public bool BandConfigured
 		{
 			get { return bandConfigured; }
-			set { SetProperty(ref bandConfigured, value); }
+			set { Set(ref bandConfigured, value); }
 		}
 		#endregion
 		#region Model
@@ -226,7 +278,7 @@ namespace Microsoft.Band.Portable.iML
 		public bool LoadingModels
 		{
 			get { return loadingModels; }
-			set { SetProperty(ref loadingModels, value); }
+			set { Set(ref loadingModels, value); }
 		}
 
 		iMLModel selectedModel;
@@ -236,7 +288,7 @@ namespace Microsoft.Band.Portable.iML
 			set
 			{
 				selectedModel = value;
-				OnPropertyChanged();
+				RaisePropertyChanged();
 				if (selectedModel == null)
 					return;
 				//MessagingService.Current.SendMessage(MessageKeys.NavigateToSession, selectedSession);
@@ -248,7 +300,7 @@ namespace Microsoft.Band.Portable.iML
 		public bool NoModels
 		{
 			get { return noModels; }
-			set { SetProperty(ref noModels, value); }
+			set { Set(ref noModels, value); }
 		}
 		#endregion
 		#endregion

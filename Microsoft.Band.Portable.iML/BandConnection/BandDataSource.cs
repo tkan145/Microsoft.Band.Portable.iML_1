@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MvvmHelpers;
+//using MvvmHelpers;
 using Microsoft.Band.Portable.Sensors;
 using System.Text;
+using GalaSoft.MvvmLight;
 
 namespace Microsoft.Band.Portable.iML
 {

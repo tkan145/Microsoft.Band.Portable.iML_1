@@ -3,64 +3,64 @@ using System.Collections.Generic;
 using Microsoft.Band.Portable;
 using System.Threading.Tasks;
 using System.Linq;
-using MvvmHelpers;
+//using MvvmHelpers;
 using Microsoft.Band.Portable.Sensors;
 using Xamarin.Forms;
+using GalaSoft.MvvmLight;
 
 namespace Microsoft.Band.Portable.iML
 {
 	public class BandConnection : ObservableObject
 	{
 		// Store BandInfo so we can get name of the band later
-		public BandDeviceInfo[] pairedBands;
-		public BandClient bandClient;
-
-		public BandConnection() { }
-
-		public async Task ConnectBands()
+		public IEnumerable<BandDeviceInfo> pairedBands;
+		public BandClient bandClient { get; protected set; }
+		public BandDeviceInfo bandInfo;
+		public BandConnection()
 		{
-			if (pairedBands == null)
-				await this.FindBands();
-			else
-			{
-				this.statusMessage = "Connecting ....";
-				try
-				{
-					bandClient = await BandClientManager.Instance.ConnectAsync(pairedBands[0]);
-					this.BandConnectionStatus = "Connected";
-					this.statusMessage = "You're all set, Band has been configured.";
-				}
-				catch (BandException ex)
-				{
-					// Handle band connection Exception
-					//var diaglog = DisplayAlert("Alert", "You have been alerted", "Ok");
-					await ConnectBands();
-				}
 
-				//await AddBandSensor<BandAccelerometerReading>(bandClient.SensorManager.Accelerometer, Accelerometer_ReadingChanged);
-			}
 		}
 
-		private async Task FindBands()
+		public async Task<bool> ConnectBands()
+		{
+			if (pairedBands == null)
+			{
+				await FindBands();
+			}
+			this.statusMessage = "Connecting ....";
+
+			BandClient client = await BandClientManager.Instance.ConnectAsync(this.pairedBands.FirstOrDefault());
+			if (client != null)
+			{
+				this.bandClient = client;
+				this.BandConnectionStatus = "Connected";
+				this.statusMessage = "You're all set, Band has been configured.";
+				return true;
+			}
+			else
+				return false;
+		}
+
+		public async Task FindBands()
 		{
 			try
 			{
-
 				// Get the list of Microsoft Bands paired to the phone.
-				BandDeviceInfo[] pariedBands = await BandClientManager.Instance.GetPairedBandsAsync() as BandDeviceInfo[];
-				if (pariedBands != null && pariedBands.Count() >= 1)
+				IEnumerable<BandDeviceInfo> Bands = await BandClientManager.Instance.GetPairedBandsAsync();
+				this.pairedBands = Bands;
+
+				if (this.pairedBands == null)
 				{
-					var bandFound = pariedBands.FirstOrDefault();
-					this.BandName = bandFound.Name;
-					this.BandConnectionStatus = "No Connection";
-					this.statusMessage = "Click connect to connect your devices";
-				}
-				else
-				{
-					this.statusMessage = "This app requires a Microsoft Band paired to your device.";
+					this.StatusMessage = "This app requires a Microsoft Band paired to your device.";
 					this.bandConnectionStatus = "No Connection";
 					this.bandName = "Not found";
+					return;
 				}
+
+				var bandFound = this.pairedBands.FirstOrDefault();
+				this.BandName = bandFound.Name;
+				this.BandConnectionStatus = "No Connection";
+				this.StatusMessage = "Click connect to connect your devices";
 			}
 			catch (Exception ex)
 			{
@@ -97,21 +97,21 @@ namespace Microsoft.Band.Portable.iML
 		public string StatusMessage
 		{
 			get { return statusMessage; }
-			set { SetProperty(ref statusMessage, value); }
+			set { Set(ref statusMessage, value); }
 		}
 
 		private string bandName = "";
 		public string BandName
 		{
 			get { return bandName; }
-			set { SetProperty(ref bandName, value); }
+			set { Set(ref bandName, value); }
 		}
 
 		private string bandConnectionStatus = "";
 		public string BandConnectionStatus
 		{
 			get { return bandConnectionStatus; }
-			set { SetProperty(ref bandConnectionStatus, value); }
+			set { Set(ref bandConnectionStatus, value); }
 		}
 
 		public Task DisconnectBand()

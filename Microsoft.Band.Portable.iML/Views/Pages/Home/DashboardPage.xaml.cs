@@ -36,20 +36,35 @@ namespace Microsoft.Band.Portable.iML.Views
 
 		private void UpdatePage()
 		{
-			bool forceRefresh = (DateTime.UtcNow > (ViewModel?.NextForceRefresh ?? DateTime.UtcNow));
+			//bool forceRefresh = (DateTime.UtcNow > (ViewModel?.NextForceRefresh ?? DateTime.UtcNow));
+			bool forceRefresh = true;
 			if (forceRefresh)
 			{
 				ViewModel.RefreshCommand.Execute(null);
 			}
 			else
 			{
+
 				if (ViewModel.Models.Count == 0)
 				{
-					//ViewModel.LoadModelsCommand.Execute(null);
+					ViewModel.LoadModelsCommand.Execute(null);
 				}
-
 			}
+			//ViewModel.LoadBandsCommand.Execute(null);
 		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
+			UpdatePage();
+		}
+
+		protected override void OnDisappearing()
+		{
+			base.OnDisappearing();
+			UpdatePage();
+		}
+
 		public void OnResume()
 		{
 			UpdatePage();
