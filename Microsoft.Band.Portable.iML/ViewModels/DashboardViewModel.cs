@@ -105,9 +105,7 @@ namespace Microsoft.Band.Portable.iML
 
 		async Task ExecuteAddModelCommandAsync()
 		{
-			await Task.Delay(1000);
-			//var page = new NewRIModelPage(new NewRIViewModel(entry, transaction));
-			//Navigation.PushAsync(page
+            await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new NewAIModelPage()));
 		}
 
 		RelayCommand loadBandsCommand;

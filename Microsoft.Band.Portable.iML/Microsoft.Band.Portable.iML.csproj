@@ -57,6 +57,12 @@
     <EmbeddedResource Include="Views\Pages\Home\ReportDetailsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pages\Home\NewAIModelPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cell\PickerCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -114,6 +120,13 @@
     <Compile Include="BandConnection\BandInformation.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Helpers\ObservableRangeCollection.cs" />
+    <Compile Include="Views\Pages\Home\NewAIModelPage.xaml.cs">
+      <DependentUpon>NewAIModelPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cell\PickerCell.xaml.cs">
+      <DependentUpon>PickerCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NewAIViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
