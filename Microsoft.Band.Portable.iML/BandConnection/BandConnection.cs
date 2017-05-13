@@ -21,7 +21,7 @@ namespace Microsoft.Band.Portable.iML
 
 		}
 
-		public async Task<bool> ConnectBands()
+		public async Task ConnectBands()
 		{
 			if (pairedBands == null)
 			{
@@ -30,15 +30,16 @@ namespace Microsoft.Band.Portable.iML
 			this.statusMessage = "Connecting ....";
 
 			BandClient client = await BandClientManager.Instance.ConnectAsync(this.pairedBands.FirstOrDefault());
-			if (client != null)
+			if (client == null)
+			{
+				return;
+			}
+			else
 			{
 				this.bandClient = client;
 				this.BandConnectionStatus = "Connected";
 				this.statusMessage = "You're all set, Band has been configured.";
-				return true;
 			}
-			else
-				return false;
 		}
 
 		public async Task FindBands()
@@ -49,18 +50,21 @@ namespace Microsoft.Band.Portable.iML
 				IEnumerable<BandDeviceInfo> Bands = await BandClientManager.Instance.GetPairedBandsAsync();
 				this.pairedBands = Bands;
 
-				if (this.pairedBands == null)
+				if (this.pairedBands == null || this.pairedBands.Count() < 1)
 				{
 					this.StatusMessage = "This app requires a Microsoft Band paired to your device.";
 					this.bandConnectionStatus = "No Connection";
 					this.bandName = "Not found";
-					return;
+					//return;
+				}
+				else
+				{
+					var bandFound = this.pairedBands.FirstOrDefault();
+					this.BandName = bandFound.Name;
+					this.BandConnectionStatus = "No Connection";
+					this.StatusMessage = "Click connect to connect your devices";
 				}
 
-				var bandFound = this.pairedBands.FirstOrDefault();
-				this.BandName = bandFound.Name;
-				this.BandConnectionStatus = "No Connection";
-				this.StatusMessage = "Click connect to connect your devices";
 			}
 			catch (Exception ex)
 			{
