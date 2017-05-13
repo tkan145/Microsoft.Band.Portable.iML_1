@@ -39,24 +39,24 @@ namespace Microsoft.Band.Portable.iML
 
 		public async Task LoadCategoriesAsync()
 		{
-			//Categories.Clear();
-			//var items = await StoreManager.CategoryStore.GetItemsAsync();
-			//try
-			//{
-			//	if (!items.Any())
-			//		items = await StoreManager.CategoryStore.GetItemsAsync(true);
-			//}
-			//catch
-			//{
-			//	items = await StoreManager.CategoryStore.GetItemsAsync(true);
-			//}
+			Categories.Clear();
+			var items = await StoreManager.CategoryStore.GetItemsAsync();
+			try
+			{
+				if (!items.Any())
+					items = await StoreManager.CategoryStore.GetItemsAsync(true);
+			}
+			catch
+			{
+				items = await StoreManager.CategoryStore.GetItemsAsync(true);
+			}
 
-			//foreach (var category in items.OrderBy(c => c.Name))
-			//{
-			//	category.IsFiltered = Settings.ShowAllCategories || Settings.FilteredCategories.Contains(category.Name);
-			//	category.IsEnabled = !Settings.ShowAllCategories;
-			//	Categories.Add(category);
-			//}
+			foreach (var category in items.OrderBy(c => c.Name))
+			{
+				category.IsFiltered = Settings.ShowAllCategories || Settings.FilteredCategories.Contains(category.Name);
+				category.IsEnabled = !Settings.ShowAllCategories;
+				Categories.Add(category);
+			}
 
 			Save();
 		}

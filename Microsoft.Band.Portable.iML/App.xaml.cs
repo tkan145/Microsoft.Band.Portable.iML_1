@@ -13,7 +13,7 @@ namespace Microsoft.Band.Portable.iML
 			current = this;
 			InitializeComponent();
 			this.Bands = new BandConnection();
-			//ViewModelBase.Init();
+			BaseViewModel.Init();
 			switch (Device.RuntimePlatform)
 			{
 				case Device.iOS:

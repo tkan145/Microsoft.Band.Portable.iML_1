@@ -131,14 +131,14 @@ namespace Microsoft.Band.Portable.iML
 				DependencyService.Register<ILogStore, DataStore.Mock.LogStore>();
 				DependencyService.Register<IStoreManager, DataStore.Mock.StoreManager>();
 			}
-			//else
-			//{
-			//	//DependencyService.Register<IModelStore, DataStore.Offline.ModelStore>();
-			//	//DependencyService.Register<ICategoryStore, DataStore.Offline.SensorCategoryStore>();
-			//	//DependencyService.Register<ILogStore, DataStore.Offline.LogStore>();
-			//	DependencyService.Register<IStoreManager, DataStore.Offline.StoreManager>();
-			//	// Register Band datastore here
-			//}
+			else
+			{
+				//	//DependencyService.Register<IModelStore, DataStore.Offline.ModelStore>();
+				//DependencyService.Register<ICategoryStore, DataStore.Offline.SensorCategoryStore>();
+				//	//DependencyService.Register<ILogStore, DataStore.Offline.LogStore>();
+				//	DependencyService.Register<IStoreManager, DataStore.Offline.StoreManager>();
+				//	// Register Band datastore here
+			}
 		}
 
 		protected IStoreManager StoreManager { get; } = DependencyService.Get<IStoreManager>();

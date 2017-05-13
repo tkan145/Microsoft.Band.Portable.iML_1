@@ -13,7 +13,6 @@ namespace Microsoft.Band.Portable.iML.DataStore.Abstractions
 		ICategoryStore CategoryStore { get; }
 		ILogStore LogStore { get; }
 
-		Task<bool> SyncAllAsync(bool syncUserSpecific);
 		Task DropEverythingAsync();
 	}
 }
