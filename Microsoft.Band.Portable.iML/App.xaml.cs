@@ -7,11 +7,13 @@ namespace Microsoft.Band.Portable.iML
 	public partial class App : Application
 	{
 		public static App current;
+		public BandConnection Bands { get; set; }
 		public App()
 		{
 			current = this;
 			InitializeComponent();
-
+			this.Bands = new BandConnection();
+			//ViewModelBase.Init();
 			switch (Device.RuntimePlatform)
 			{
 				case Device.iOS:

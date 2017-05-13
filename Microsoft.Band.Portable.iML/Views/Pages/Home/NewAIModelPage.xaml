@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+    x:Class="Microsoft.Band.Portable.iML.NewAIModelPage"
+	Title="Create new Model"
+    BackgroundColor="{DynamicResource WindowBackgroundTable}">
+	<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" x:Name="ToolbarSave" Command="{Binding SaveCommand}"/>
+		<ToolbarItem Text="Cancel" x:Name="ToolbarCancel" Command="{Binding CancelCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+        iOS="0, 20, 0, 0" />
+    </ContentPage.Padding>
+	<TableView x:Name="tableView" Intent="Form">
+            <TableRoot>
+                <TableSection Title="Model Information">
+                    <EntryCell  Label="Name" 
+                                Placeholder="Enter Name"
+                                Text="{Binding Model.Name}"/>
+                    <EntryCell  x:Name="Description" Label="Descrition" 
+                                Placeholder="Short Description"
+                                Text="{Binding Model.Description}"/>
+                    <local:PickerCell Label="Algorithm" Title="Algorithm" SelectedValue="{Binding Algorithm}">
+                        <x:String>Q-Learning</x:String>
+                        <x:String>SARSA</x:String>
+                        <x:String>DQN</x:String>
+                    </local:PickerCell>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" 
+                                    
+                                    Padding="16,0"
+                                    BindingContext="x:Reference cell">
+                            <Label  Text="Algorithms" 
+                                    VerticalOptions="Center"/>
+                            <Picker x:Name="picker"
+                                    Title="{Binding Title}"
+                                    HorizontalOptions="FillAndExpand" 
+                                    VerticalOptions="Center" 
+                                    SelectedIndex="{Binding AlgorithmSelectedIndex}" 
+                                    ItemsSource="{Binding Algorithms, BindingMode.TwoWay}"/>
+                        </StackLayout>
+                    </ViewCell>
+                    <SwitchCell Text="Advance Options" On="{Binding IsAdvanceOption}"/>
+                </TableSection>
+                <TableSection x:Name="AdvanceOptionSection" Title="Advance Options">
+                    <!--Visibility is set with behind code-->
+                   <!--<ViewCell>
+                        <StackLayout Orientation="Horizontal" 
+                                    
+                                    Padding="16,0"
+                                    BindingContext="x:Reference cell">
+                            <Label  Text="Algorithms" 
+                                    VerticalOptions="Center"/>
+                            <Picker x:Name="picker"
+                                    Title="{Binding Title}"
+                                    HorizontalOptions="FillAndExpand" 
+                                    VerticalOptions="Center" 
+                                    SelectedIndex="{Binding AlgorithmSelectedIndex}" 
+
+                                    ItemsSource="{Binding Algorithms}"/>
+                        </StackLayout>
+                    </ViewCell>-->
+
+                    <local:PickerCell Label="Filter" Title="Filter" SelectedValue="{Binding Filter}">
+                        <x:String>Buterworth LowPass</x:String>
+                    </local:PickerCell>
+                </TableSection>
+            </TableRoot>
+    </TableView>
+</ContentPage>

@@ -63,7 +63,7 @@
 										Text="Paired Band" 
 										Style="{DynamicResource iMLListItemTextStyle}"/>
                                 <Label 	HorizontalOptions="Center" 
-										Text="{Binding PariedBand}"
+										Text="{Binding PairedBand}"
                                         Style="{DynamicResource iMLListItemDetailTextStyle}"
                                         StyleId="2.4GHzSSID"/>
                             </StackLayout>
@@ -84,15 +84,15 @@
                             <StackLayout.IsVisible>
                                 <OnPlatform x:TypeArguments="x:Boolean" iOS="true" Android="true" WinPhone="false"/>
                             </StackLayout.IsVisible>
-                            <Button Text="Setup Connection"
+                            <Button Text="{Binding ButtonText}"
                                     Command="{Binding ConfigureBandCommand}"
                                     BackgroundColor="{StaticResource PrimaryDark}"
-                                    IsEnabled="{Binding FoundBands}"
+                                    IsEnabled="true"
                                     TextColor="White"
                                     StyleId="2.4GHzSetUpButton"/>
                             <Label Text="{Binding StatusMessage}" HorizontalOptions="Center" 
                                    
-                                   Style="{DynamicResource EvolveListItemDetailTextStyle}"
+                                   Style="{DynamicResource iMLListItemDetailTextStyle}"
                                    StyleId="2.4GHzSuccessText"/>
                          </StackLayout>
 						<local:FooterDivider/>
