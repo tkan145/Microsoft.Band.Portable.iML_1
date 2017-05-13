@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Microsoft.Band.Portable.iML.DataStore.Abstractions;
 using Xamarin.Forms;
 //using Microsoft.Band.Portable.iML.Helpers;
 //using Microsoft.Band.Portable.iML.DataStore.Abstractions;
@@ -140,8 +141,7 @@ namespace Microsoft.Band.Portable.iML
 			//}
 		}
 
-		//protected IStoreManager StoreManager { get; } = DependencyService.Get<IStoreManager>();
-		//protected IToast Toast { get; } = DependencyService.Get<IToast>();
+		protected IStoreManager StoreManager { get; } = DependencyService.Get<IStoreManager>();
 
 		public Settings Settings
 		{

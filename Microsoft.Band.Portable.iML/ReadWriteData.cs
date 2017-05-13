@@ -22,38 +22,38 @@ namespace Microsoft.Band.Portable.iML
 
 		public static async Task WriteFileAsync(string fileName, string[] text)
 		{
-			try
-			{
-				var file = await FileSystem.Current.LocalStorage.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+			//try
+			//{
+			//	var file = await FileSystem.Current.LocalStorage.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
-				using (var stream = await file.OpenAsync(FileAccess.ReadAndWrite))
-				{
-					using (var writer = new StreamWriter(stream))
-					{
-						await writer.WriteLineAsync("\r\nLog Entry : ");
-						await writer.WriteLineAsync("{0}", DateTime.Now.ToString());
-						foreach (string line in text)
-						{
-							await writer.WriteLineAsync(line);
-						}
-						await writer.WriteAsync("-------------------------------");
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				await DisplayAlert("Error message: ", ex.Message, "OK");
-			}
+			//	using (var stream = await file.OpenAsync(FileAccess.ReadAndWrite))
+			//	{
+			//		using (var writer = new StreamWriter(stream))
+			//		{
+			//			await writer.WriteLineAsync("\r\nLog Entry : ");
+			//			await writer.WriteLineAsync("{0}", DateTime.Now.ToString());
+			//			foreach (string line in text)
+			//			{
+			//				await writer.WriteLineAsync(line);
+			//			}
+			//			await writer.WriteAsync("-------------------------------");
+			//		}
+			//	}
+			//}
+			//catch (Exception ex)
+			//{
+			//	await DisplayAlert("Error message: ", ex.Message, "OK");
+			//}
 
-			await DisplayAlert("Noerrors: ", "Is  file there?", "OK");
+			//await DisplayAlert("Noerrors: ", "Is  file there?", "OK");
 
-			ExistenceCheckResult exist = await rootFolder.CheckExistsAsync("lou.txt");
-			if (exist == ExistenceCheckResult.FileExists)
-			{
-				await DisplayAlert("File Exists?", "Yes, file does exist", "OK");
-			}
-			else
-				await DisplayAlert("File Exists?", "No, file does NOT exist", "OK");
+			//ExistenceCheckResult exist = await rootFolder.CheckExistsAsync("lou.txt");
+			//if (exist == ExistenceCheckResult.FileExists)
+			//{
+			//	await DisplayAlert("File Exists?", "Yes, file does exist", "OK");
+			//}
+			//else
+			//	await DisplayAlert("File Exists?", "No, file does NOT exist", "OK");
 		}
 
 
@@ -103,8 +103,8 @@ namespace Microsoft.Band.Portable.iML
 				using (var stream = await file.OpenAsync(FileAccess.ReadAndWrite))
 				{
 					//byte[] imageBuffer = await 
-					await stream.WriteAsync(imageBuffer, 0, imageBuffer.Length);
-					image.ImageUri = file.Path;
+					//await stream.WriteAsync(imageBuffer, 0, imageBuffer.Length);
+					//image.ImageUri = file.Path;
 				}
 			}
 		}
