@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+	xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
+	xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
+	x:Class="Microsoft.Band.Portable.iML.AgentDetailsPage"
+	Title="Model Info"
+    x:Name="ModelInfo"
+    NavigationPage.BackButtonTitle="Back"
+    BackgroundColor="{DynamicResource WindowBackgroundTable}">
+	<ContentPage.ToolbarItems>
+        <ToolbarItem Icon="Trash-30.png" Text="Share" Command="{Binding ShareCommand}"/>
+    </ContentPage.ToolbarItems>
+	<Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" x:Name="Row1Header"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+ 
+        <Grid RowSpacing="0" ColumnSpacing="0" x:Name="HeaderView" BackgroundColor="{DynamicResource Primary}">
+            <chart:SfChart Margin="10" x:Name="sfChart" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+				<chart:SfChart.Legend>
+					<chart:ChartLegend ToggleSeriesVisibility="true">
+						<chart:ChartLegend.LabelStyle>
+                   			<chart:ChartLegendLabelStyle TextColor="White" />
+         				</chart:ChartLegend.LabelStyle>
+					</chart:ChartLegend>
+				</chart:SfChart.Legend>
+                <chart:SfChart.Title>
+					<chart:ChartTitle Text="Calibration" TextColor="White"/>
+				</chart:SfChart.Title> 
+				<chart:SfChart.PrimaryAxis>
+                	<chart:CategoryAxis/>
+           		</chart:SfChart.PrimaryAxis>
+
+            	<chart:SfChart.SecondaryAxis>
+               		<chart:NumericalAxis Minimum="-10" Maximum="10"/>
+            	</chart:SfChart.SecondaryAxis>
+           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding XData}" XBindingPath="XAxis" YBindingPath="Value"/>
+				<chart:FastLineSeries Label="Y" x:Name="YAxis" ItemsSource ="{Binding YData}" XBindingPath="YAxis" YBindingPath="Value"/>
+				<chart:FastLineSeries Label="Z" x:Name="ZAxis" ItemsSource ="{Binding ZData}" XBindingPath="ZAxis" YBindingPath="Value"/>
+       		</chart:SfChart>
+        </Grid>
+        <local:ParallaxScrollView x:Name="MainScroll" Grid.RowSpan="2">
+			<Grid RowSpacing="0">
+				<Grid.RowDefinitions>
+                    <RowDefinition Height="300" x:Name="Row1Content"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+				
+					<StackLayout Grid.Row="1" Spacing="0">
+                    	<StackLayout BackgroundColor="{DynamicResource WindowBackgroundTable}"
+                                 Spacing="{DynamicResource CardSpacing}"
+                                 Padding="{DynamicResource CardPadding}">
+							 <!--Model Details-->
+                        <local:CardView>
+                            <StackLayout Spacing="0">
+                                <local:LabelSection Text="Details"/>
+                                <local:HeaderDivider/>
+                                <StackLayout IsVisible="{Binding IsBusy}" 
+                                         HorizontalOptions="FillAndExpand" 
+                                         VerticalOptions="Center" 
+                                          BackgroundColor="White"
+                                          Padding="{StaticResource StandardPadding}">
+                                <ActivityIndicator IsRunning="{Binding IsBusy}">
+                                    <ActivityIndicator.Color>
+                                        <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+                                    </ActivityIndicator.Color>
+                                </ActivityIndicator>
+                                <Label Text="Loading Models..." 
+                                       HorizontalOptions="Center" 
+                                       Style="{DynamicResource EvolveListItemTextStyle}"/>
+                          	 	</StackLayout>
+                                <local:FooterDivider/>
+                            </StackLayout>
+                        </local:CardView>
+
+                        <local:CardView IsVisible="{Binding Session}">
+                        <StackLayout Spacing="0">
+                            <!--Train-->
+                            <local:LabelSection Text="Trainning" StyleId="FeedbackTitle"/>
+                                <local:HeaderDivider/>
+                                <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White" StyleId="RateCardBox">
+             
+                                        <Button
+                                            IsVisible="{Binding Session.FeedbackLeft}"
+                                            Text="Train this model"                                     
+                                            x:Name="ButtonTrain"
+											Command="{Binding TrainCommand}">
+                                            <Button.FontAttributes>
+                                                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+                                            </Button.FontAttributes>
+                                            <Button.BackgroundColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource PrimaryDark}" iOS="Transparent"/>
+                                            </Button.BackgroundColor>
+                                            <Button.TextColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="White" iOS="{StaticResource PrimaryDark}"/>
+                                            </Button.TextColor>
+                                            <Button.BorderWidth>
+                                                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+                                            </Button.BorderWidth> 
+                                            <Button.BorderColor>
+                                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+                                            </Button.BorderColor> 
+                                        </Button>
+                                    </StackLayout>
+                                <local:FooterDivider/>
+                        </StackLayout>
+                    </local:CardView>
+
+					<local:CardView IsVisible="{Binding HasAnyLog}">
+                            <!--Logs-->
+                            <StackLayout Spacing="0">
+                                <local:LabelSection Text="Logs" StyleId="MoreSessionsSection"/>
+                                <local:HeaderDivider/>
+                                <StackLayout IsVisible="{Binding IsBusy}"
+                                             HorizontalOptions="FillAndExpand"
+                                             VerticalOptions="Center"
+                                              BackgroundColor="White"
+                                              Padding="{StaticResource StandardPadding}">
+                                    <ActivityIndicator IsRunning="{Binding IsBusy}" >
+                                        <ActivityIndicator.Color>
+                                            <OnPlatform x:TypeArguments="Color" Android="{StaticResource Accent}"/>
+                                        </ActivityIndicator.Color>
+                                    </ActivityIndicator>
+                                    <Label Text="Loading Logs..."
+                                           HorizontalOptions="Center"
+                                           Style="{DynamicResource EvolveListItemTextStyle}"/>
+                                </StackLayout>
+                                <local:NonScrollableListView
+                                    x:Name="ListViewSessions"
+                                    ItemsSource="{Binding Logs}"
+                                    RowHeight="120">
+                                    <local:NonScrollableListView.SeparatorColor>
+                                        <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
+                                    </local:NonScrollableListView.SeparatorColor>
+                                    <local:NonScrollableListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell>
+                                                <local:ModelCell/>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </local:NonScrollableListView.ItemTemplate>
+                                </local:NonScrollableListView>
+                                <local:FooterDivider/>
+                            </StackLayout>
+                        </local:CardView>
+						
+
+						
+						</StackLayout>
+					</StackLayout>
+                </Grid>
+			
+		</local:ParallaxScrollView>
+    </Grid>
+</ContentPage>

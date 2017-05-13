@@ -26,7 +26,7 @@ namespace Microsoft.Band.Portable.iML.Views
 										var model = ListViewModels.SelectedItem as iMLModel;
 										if (model == null)
 											return;
-										var modelDetails = new ReportDetailsPage(model);
+										var modelDetails = new AgentDetailsPage(model);
 
 
 										await NavigationService.PushAsync(Navigation, modelDetails);

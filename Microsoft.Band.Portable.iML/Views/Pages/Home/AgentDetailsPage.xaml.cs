@@ -5,9 +5,9 @@ using Xamarin.Forms;
 
 namespace Microsoft.Band.Portable.iML
 {
-	public partial class ReportDetailsPage : ContentPage
+	public partial class AgentDetailsPage : ContentPage
 	{
-		public ReportDetailsPage(iMLModel model)
+		public AgentDetailsPage(iMLModel model)
 		{
 			InitializeComponent();
 		}
