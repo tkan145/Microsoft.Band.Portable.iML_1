@@ -40,8 +40,7 @@ namespace Microsoft.Band.Portable.iML.Views
 					if (ListViewAbout.SelectedItem == null)
 						return;
 					await Task.Delay(1000);
-					//App.Logger.TrackPage(AppPage.Settings.ToString());
-					//await NavigationService.PushAsync(Navigation, new SettingsPage());
+					await NavigationService.PushAsync(Navigation, new SettingsPage());
 
 					ListViewAbout.SelectedItem = null;
 				};
