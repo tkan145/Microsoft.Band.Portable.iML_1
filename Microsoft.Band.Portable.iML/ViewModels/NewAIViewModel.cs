@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight.Command;
 using Xamarin.Forms;
@@ -8,17 +9,12 @@ namespace Microsoft.Band.Portable.iML
 {
 	public class NewAIViewModel : BaseViewModel
 	{
-		//private Transaction _transaction;
-		//private Realm _realm;
-		internal INavigation Navigation { get; set; }
-		public iMLModel Model { get; private set; }
-
-		//      public NewRIViewModel(DataObjects.iMLModel model, Transaction transaction)
-		//{
-		//          //_realm = Realm.GetInstance();
-		//          //_transaction = transaction;
-		//          Model = model;
-		//}
+		//internal INavigation Navigation { get; set; }
+		public iMLModel Model { get; set; }
+		public NewAIViewModel(INavigation navigation) : base(navigation)
+		{
+			Model = new iMLModel();
+		}
 
 		RelayCommand saveCommand;
 		public RelayCommand SaveCommand =>
@@ -26,9 +22,28 @@ namespace Microsoft.Band.Portable.iML
 
 		async Task ExecuteSaveCommand()
 		{
-			//_transaction.Commit();
-			await Navigation.PopModalAsync(true);
+
+			//await Navigation.PopModalAsync(true);
+			if (string.IsNullOrWhiteSpace(Name))
+				Debug.WriteLine("Model: ", Model.Name);
+			else
+				Debug.WriteLine(Name);
+			var model = new iMLModel();
+			model.Name = Name;
+			await StoreManager.ModelStore.InsertAsync(model);
+			await Navigation.PopModalAsync();
+			//await Task.Delay(1000);
 		}
+
+		private string name;
+		public string Name
+		{
+			get { return name; }
+			set { Set(ref name, value); }
+		}
+
+		public iMLModel newModel = new iMLModel();
+
 
 		bool isAdvanceOption;
 		public bool IsAdvanceOption
@@ -48,26 +63,11 @@ namespace Microsoft.Band.Portable.iML
 
 		}
 
-		List<string> algorithms = new List<string>
-		{
-		"Afghanistan",
-		"Albania",
-		"Algeria",
-		"Andorra",
-		"Angola",
-
-
-
-		};
-		public List<string> Algorithms => algorithms;
-
-
-
-
-
 		internal void OnDisappearing()
 		{
-			//_transaction.Dispose();
+			//_transaction.Dispose();		}
+
 		}
 	}
 }
+

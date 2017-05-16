@@ -6,7 +6,7 @@
     <ViewCell.View>
         <StackLayout Orientation="Horizontal"
                      BindingContext="{x:Reference cell}"
-                     Padding="16, 0">
+                     Padding="16, 0" Spacing="0,20">
         
             <Label Text="{Binding Label}"
                    VerticalOptions="Center" />

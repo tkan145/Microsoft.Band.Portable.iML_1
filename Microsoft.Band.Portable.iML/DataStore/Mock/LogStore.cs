@@ -17,7 +17,7 @@ namespace Microsoft.Band.Portable.iML.DataStore.Mock
 		{
 			if (!initialized)
 				await InitializeStore();
-			return logs.FirstOrDefault(s => s.ID == id);
+			return logs.FirstOrDefault(s => s.Id == id);
 		}
 
 		public async override Task<IEnumerable<Log>> GetItemsAsync(bool forceRefresh = false)
@@ -65,7 +65,7 @@ namespace Microsoft.Band.Portable.iML.DataStore.Mock
 				var eposch = random.Next(100, 1000);
 				yield return new Log
 				{
-					ID = i.ToString(),
+					Id = i.ToString(),
 					//Accuracy = accuracy,
 					Reward = reward,
 					Action = action,

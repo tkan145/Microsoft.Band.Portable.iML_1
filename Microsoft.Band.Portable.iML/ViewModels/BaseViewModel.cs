@@ -122,7 +122,7 @@ namespace Microsoft.Band.Portable.iML
 			Navigation = navigation;
 		}
 
-		public static void Init(bool mock = true)
+		public static void Init(bool mock = false)
 		{
 			if (mock)
 			{
@@ -133,10 +133,10 @@ namespace Microsoft.Band.Portable.iML
 			}
 			else
 			{
-				//	//DependencyService.Register<IModelStore, DataStore.Offline.ModelStore>();
-				//DependencyService.Register<ICategoryStore, DataStore.Offline.SensorCategoryStore>();
-				//	//DependencyService.Register<ILogStore, DataStore.Offline.LogStore>();
-				//	DependencyService.Register<IStoreManager, DataStore.Offline.StoreManager>();
+				DependencyService.Register<IModelStore, DataStore.Local.ModelStore>();
+				DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
+				DependencyService.Register<ILogStore, DataStore.Local.LogStore>();
+				DependencyService.Register<IStoreManager, DataStore.Local.StoreManager>();
 				//	// Register Band datastore here
 			}
 		}
