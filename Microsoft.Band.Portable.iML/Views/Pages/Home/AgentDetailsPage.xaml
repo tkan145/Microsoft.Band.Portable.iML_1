@@ -28,7 +28,7 @@
 					</chart:ChartLegend>
 				</chart:SfChart.Legend>
                 <chart:SfChart.Title>
-					<chart:ChartTitle Text="Calibration" TextColor="White"/>
+					<chart:ChartTitle Text="Reward" TextColor="White"/>
 				</chart:SfChart.Title> 
 				<chart:SfChart.PrimaryAxis>
                 	<chart:CategoryAxis/>
@@ -79,12 +79,12 @@
                         <local:CardView IsVisible="{Binding Session}">
                         <StackLayout Spacing="0">
                             <!--Train-->
-                            <local:LabelSection Text="Trainning" StyleId="FeedbackTitle"/>
+                            <local:LabelSection Text="Trainning"/>
                                 <local:HeaderDivider/>
-                                <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White" StyleId="RateCardBox">
+                                <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White">
              
                                         <Button
-                                            IsVisible="{Binding Session.FeedbackLeft}"
+                                            
                                             Text="Train this model"                                     
                                             x:Name="ButtonTrain"
 											Command="{Binding TrainCommand}">
@@ -146,13 +146,9 @@
                                 <local:FooterDivider/>
                             </StackLayout>
                         </local:CardView>
-						
-
-						
 						</StackLayout>
 					</StackLayout>
                 </Grid>
-			
 		</local:ParallaxScrollView>
     </Grid>
 </ContentPage>

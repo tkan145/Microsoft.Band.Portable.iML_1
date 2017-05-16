@@ -5,20 +5,18 @@ namespace Microsoft.Band.Portable.iML
 {
 	public interface IBaseDataObject
 	{
-		int ID { get; set; }
+		string Id { get; set; }
 	}
 
 	public class BaseDataObject : ObservableObject, IBaseDataObject
 	{
 		public BaseDataObject()
 		{
-			//ID = Guid.NewGuid().ToString();
+			Id = Guid.NewGuid().ToString();
 		}
 
-		public string RemoteId { get; set; }
-
 		//[Newtonsoft.Json.JsonProperty("Id")]
-		public int ID { get; set; }
+		public string Id { get; set; }
 
 	}
 }

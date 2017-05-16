@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="Microsoft.Band.Portable.iML.Views.ModelCell">
+	<Grid Padding="{DynamicResource StandardPadding}" 
+          ColumnSpacing="{StaticResource StandardSpacing}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="30"/>
+        </Grid.ColumnDefinitions>
+
+
+            <Label Grid.Row="0"
+                   Grid.RowSpan="2"
+                   Text="{Binding Name}" 
+                   Style="{DynamicResource iMLListItemTextStyle}"
+                   />
+
+
+            <Label Grid.Row="2"
+				   Grid.Column = "0"
+                   Text="Description: " 
+                   Style="{DynamicResource iMLListItemDetailTextStyle}"
+                   />
+			<Label Grid.Row="2"
+				   Grid.Column = "1"
+                   Text="{Binding Description}" 
+                   Style="{DynamicResource iMLListItemDetailTextStyle}"
+                   />
+			<Label Grid.Row="3"
+				   Grid.Column = "0"
+                   Text="Gamma: " 
+                   Style="{DynamicResource iMLListItemDetailTextStyle}"
+                   />
+            <Label Grid.Row="3"
+                   VerticalOptions="End"
+				   Grid.Column = "1"
+                   Text="{Binding Gamma}}" 
+                   Style="{DynamicResource iMLListItemDetailTextStyle}"
+                   />
+    </Grid>
+</ContentView>

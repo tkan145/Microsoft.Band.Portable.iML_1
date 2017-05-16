@@ -6,7 +6,7 @@
 	Title="Create new Model"
     BackgroundColor="{DynamicResource WindowBackgroundTable}">
 	<ContentPage.ToolbarItems>
-        <ToolbarItem Text="Save" x:Name="ToolbarSave" Command="{Binding SaveCommand}"/>
+        <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
 		<ToolbarItem Text="Cancel" x:Name="ToolbarCancel" Command="{Binding CancelCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Padding>
@@ -18,19 +18,41 @@
                 <TableSection Title="Model Information">
                     <EntryCell  Label="Name" 
                                 Placeholder="Enter Name"
-                                Text="{Binding Model.Name}"/>
+                                Text="{Binding Name,Mode=TwoWay}"
+								Keyboard="Text"/>
                     <EntryCell  x:Name="Description" Label="Descrition" 
                                 Placeholder="Short Description"
-                                Text="{Binding Model.Description}"/>
+                                Text="{Binding Model.Description,Mode=TwoWay}"
+								Keyboard="Text"/>
+                </TableSection>
+
+                <TableSection Title="Model Configuration">
+                    <EntryCell  Label="Max Reward" 
+                                Placeholder="Maximum Reward"
+                                Text="{Binding Name,Mode=TwoWay}"
+								Keyboard="Text"/>
+                    <EntryCell  x:Name="MinReward" Label="Min Reward" 
+                                Placeholder="Minimum Reward"
+                                Text="{Binding Description,Mode=TwoWay}"
+								Keyboard="Text"/>
+					<EntryCell  x:Name="Gamma" Label="Gamma" 
+                                Placeholder="Gamma = 0.2"
+                                Text="{Binding Gamma,Mode=TwoWay}"
+								Keyboard="Numeric"/>
+					<EntryCell  x:Name="Alpha" Label="Alpha" 
+                                Placeholder="Alpha = 0.2"
+                                Text="{Binding Alpha}"
+								Keyboard="Numeric"/>
+				
                     <local:PickerCell Label="Algorithm" Title="Algorithm" SelectedValue="{Binding Algorithm}">
                         <x:String>Q-Learning</x:String>
                         <x:String>SARSA</x:String>
                         <x:String>DQN</x:String>
                     </local:PickerCell>
-                    <ViewCell>
+                   <!-- <ViewCell>
                         <StackLayout Orientation="Horizontal" 
-                                    
-                                    Padding="16,0"
+                                    Spacing="{DynamicResource CardSpacing}"
+                					Padding="{DynamicResource CardPadding}"
                                     BindingContext="x:Reference cell">
                             <Label  Text="Algorithms" 
                                     VerticalOptions="Center"/>
@@ -41,7 +63,7 @@
                                     SelectedIndex="{Binding AlgorithmSelectedIndex}" 
                                     ItemsSource="{Binding Algorithms, BindingMode.TwoWay}"/>
                         </StackLayout>
-                    </ViewCell>
+                    </ViewCell>-->
                     <SwitchCell Text="Advance Options" On="{Binding IsAdvanceOption}"/>
                 </TableSection>
                 <TableSection x:Name="AdvanceOptionSection" Title="Advance Options">

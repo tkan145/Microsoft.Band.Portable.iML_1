@@ -84,7 +84,7 @@ namespace Microsoft.Band.Portable.iML
 				var tasks = new Task[]
 				{
 						ExecuteLoadBandsCommandAsync(),
-						//ExecuteLoadModelsCommandAsync()
+						ExecuteLoadModelsCommandAsync()
 					};
 
 				await Task.WhenAll(tasks);
@@ -105,7 +105,7 @@ namespace Microsoft.Band.Portable.iML
 
 		async Task ExecuteAddModelCommandAsync()
 		{
-            await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new NewAIModelPage()));
+			await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new NewAIModelPage()));
 		}
 
 		RelayCommand loadBandsCommand;
@@ -161,15 +161,16 @@ namespace Microsoft.Band.Portable.iML
 				await Task.Delay(1000);
 #endif
 
-				//Models.ReplaceRange(await StoreManager.ModelStore.GetItemsAsync());
 
-				//if (models != null)
-				//	Models.AddRange(models);
-				//NoModels = Models.Count == 0;
+				var models = await StoreManager.ModelStore.GetItemsAsync();
+				if (models != null)
+					Models.AddRange(models);
+				NoModels = Models.Count == 0;
 			}
 			catch (Exception ex)
 			{
 				MessagingService.Current.SendMessage(MessageKeys.Error, ex);
+				NoModels = true;
 			}
 			finally
 			{
@@ -183,17 +184,17 @@ namespace Microsoft.Band.Portable.iML
 
 		async Task ExecuteConnectCommand()
 		{
-			//if (band.bandClient.IsConnected)
-			//{
-			//	try
-			//	{
-			//		await band.DisconnectBand();
-			//	}
-			//	catch (Exception ex)
-			//	{
-			//		this.statusMessage = "Disconnect" + ex;
-			//	}
-			//}
+			if (band.bandClient.IsConnected)
+			{
+				try
+				{
+					await band.DisconnectBand();
+				}
+				catch (Exception ex)
+				{
+					this.statusMessage = "Disconnect" + ex;
+				}
+			}
 			//else
 			//{
 			//try

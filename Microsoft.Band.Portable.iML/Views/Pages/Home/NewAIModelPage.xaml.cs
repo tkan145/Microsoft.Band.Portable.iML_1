@@ -9,15 +9,16 @@ namespace Microsoft.Band.Portable.iML
 	public partial class NewAIModelPage : ContentPage
 	{
 		NewAIViewModel ViewModel => vm ?? (vm = BindingContext as NewAIViewModel);
-        NewAIViewModel vm;
+		NewAIViewModel vm;
 		public NewAIModelPage()
 		{
 			InitializeComponent();
-			BindingContext = new NewAIViewModel();
-			//viewModel.Navigation = Navigation;
-			//BindingContext = vm = new NewRIViewModel(Navigation);
+			this.BindingContext = vm = new NewAIViewModel(Navigation);
+			////viewModel.Navigation = Navigation;
+			////BindingContext = vm = new NewRIViewModel(Navigation);
 
 			tableView.Root.Remove(AdvanceOptionSection);
+
 			vm.PropertyChanged += (senser, args) =>
 			{
 				if (args.PropertyName == "IsAdvanceOption")
@@ -37,11 +38,12 @@ namespace Microsoft.Band.Portable.iML
 			{
 				await Navigation.PopModalAsync();
 			});
-			ToolbarSave.Command = new Command(async () =>
-			{
-				vm.Save();
-				await Navigation.PopModalAsync();
-			});
+			//ToolbarSave.Command = new Command(async () =>
+			//{
+			//	//vm.Save();
+			//	await Navigation.PopModalAsync();
+			//});
+
 
 		}
 

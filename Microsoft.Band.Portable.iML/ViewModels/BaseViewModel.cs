@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using Microsoft.Band.Portable.iML.DataStore.Abstractions;
 using Xamarin.Forms;
 //using Microsoft.Band.Portable.iML.Helpers;
 //using Microsoft.Band.Portable.iML.DataStore.Abstractions;
@@ -121,27 +122,26 @@ namespace Microsoft.Band.Portable.iML
 			Navigation = navigation;
 		}
 
-		public static void Init(bool mock = true)
+		public static void Init(bool mock = false)
 		{
-			//if (mock)
-			//{
-			//	DependencyService.Register<IModelStore, DataStore.Mock.ModelStore>();
-			//	DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
-			//	DependencyService.Register<ILogStore, DataStore.Mock.LogStore>();
-			//	DependencyService.Register<IStoreManager, DataStore.Mock.StoreManager>();
-			//}
-			//else
-			//{
-			//	//DependencyService.Register<IModelStore, DataStore.Offline.ModelStore>();
-			//	//DependencyService.Register<ICategoryStore, DataStore.Offline.SensorCategoryStore>();
-			//	//DependencyService.Register<ILogStore, DataStore.Offline.LogStore>();
-			//	DependencyService.Register<IStoreManager, DataStore.Offline.StoreManager>();
-			//	// Register Band datastore here
-			//}
+			if (mock)
+			{
+				DependencyService.Register<IModelStore, DataStore.Mock.ModelStore>();
+				DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
+				DependencyService.Register<ILogStore, DataStore.Mock.LogStore>();
+				DependencyService.Register<IStoreManager, DataStore.Mock.StoreManager>();
+			}
+			else
+			{
+				DependencyService.Register<IModelStore, DataStore.Local.ModelStore>();
+				DependencyService.Register<ICategoryStore, DataStore.Mock.SensorCategoryStore>();
+				DependencyService.Register<ILogStore, DataStore.Local.LogStore>();
+				DependencyService.Register<IStoreManager, DataStore.Local.StoreManager>();
+				//	// Register Band datastore here
+			}
 		}
 
-		//protected IStoreManager StoreManager { get; } = DependencyService.Get<IStoreManager>();
-		//protected IToast Toast { get; } = DependencyService.Get<IToast>();
+		protected IStoreManager StoreManager { get; } = DependencyService.Get<IStoreManager>();
 
 		public Settings Settings
 		{
