@@ -9,6 +9,11 @@
     x:Name="ModelInfo"
     NavigationPage.BackButtonTitle="Back"
     BackgroundColor="{DynamicResource WindowBackgroundTable}">
+	<ContentPage.Resources>
+     <ResourceDictionary>
+        <toolkit:InvertedBooleanConverter x:Key="InvertedBooleanConverter" />
+     </ResourceDictionary>
+    </ContentPage.Resources>
 	<ContentPage.ToolbarItems>
         <ToolbarItem Icon="Trash-30.png" Text="Share" Command="{Binding ShareCommand}"/>
     </ContentPage.ToolbarItems>
@@ -18,7 +23,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
  
-        <Grid RowSpacing="0" ColumnSpacing="0" x:Name="HeaderView" BackgroundColor="{DynamicResource Primary}">
+        <Grid RowSpacing="0" ColumnSpacing="0" x:Name="HeaderView" BackgroundColor="#072339">
+			<!--Chart-->
             <chart:SfChart Margin="10" x:Name="sfChart" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
 				<chart:SfChart.Legend>
 					<chart:ChartLegend ToggleSeriesVisibility="true">
@@ -31,17 +37,27 @@
 					<chart:ChartTitle Text="Reward" TextColor="White"/>
 				</chart:SfChart.Title> 
 				<chart:SfChart.PrimaryAxis>
-                	<chart:CategoryAxis/>
+                	<chart:CategoryAxis>
+            			<chart:CategoryAxis.Title>
+                  			<chart:ChartAxisTitle Text="Eposch" TextColor="White"> </chart:ChartAxisTitle>
+            			</chart:CategoryAxis.Title>
+         			</chart:CategoryAxis>
            		</chart:SfChart.PrimaryAxis>
 
             	<chart:SfChart.SecondaryAxis>
-               		<chart:NumericalAxis Minimum="-10" Maximum="10"/>
-            	</chart:SfChart.SecondaryAxis>
-           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding XData}" XBindingPath="XAxis" YBindingPath="Value"/>
-				<chart:FastLineSeries Label="Y" x:Name="YAxis" ItemsSource ="{Binding YData}" XBindingPath="YAxis" YBindingPath="Value"/>
-				<chart:FastLineSeries Label="Z" x:Name="ZAxis" ItemsSource ="{Binding ZData}" XBindingPath="ZAxis" YBindingPath="Value"/>
+               		<chart:NumericalAxis Minimum="-10" Maximum="10">
+						<chart:NumericalAxis.Title>
+           
+                 			<chart:ChartAxisTitle Text="Reward" TextColor="White"></chart:ChartAxisTitle>
+           
+          				</chart:NumericalAxis.Title>    
+          			</chart:NumericalAxis>   
+
+				</chart:SfChart.SecondaryAxis>
+           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding Data}" XBindingPath="Eposch" YBindingPath="Reward"/>
        		</chart:SfChart>
         </Grid>
+		
         <local:ParallaxScrollView x:Name="MainScroll" Grid.RowSpan="2">
 			<Grid RowSpacing="0">
 				<Grid.RowDefinitions>
@@ -56,7 +72,14 @@
 							 <!--Model Details-->
                         <local:CardView>
                             <StackLayout Spacing="0">
-                                <local:LabelSection Text="Details"/>
+								<Grid>
+                        		<Grid.ColumnDefinitions>
+                            		<ColumnDefinition Width="*"/>
+                            		<ColumnDefinition Width="34"/>
+                        		</Grid.ColumnDefinitions>
+                        		<local:LabelSection Text="Details"/>
+                   	 			</Grid>
+                    
                                 <local:HeaderDivider/>
                                 <StackLayout IsVisible="{Binding IsBusy}" 
                                          HorizontalOptions="FillAndExpand" 
@@ -70,8 +93,95 @@
                                 </ActivityIndicator>
                                 <Label Text="Loading Models..." 
                                        HorizontalOptions="Center" 
-                                       Style="{DynamicResource EvolveListItemTextStyle}"/>
+                                       Style="{DynamicResource iMLListItemTextStyle}"/>
                           	 	</StackLayout>
+								<Grid IsVisible="{Binding LoadingDetails, Converter={StaticResource InvertedBooleanConverter}}}" Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+						  	 		<Grid.RowDefinitions>
+            							<RowDefinition Height="Auto"/>
+							        </Grid.RowDefinitions>
+							        <Grid.ColumnDefinitions>
+							            <ColumnDefinition Width="*"/>
+										<ColumnDefinition Width="*"/>
+							            <ColumnDefinition Width="*"/>
+							            <ColumnDefinition Width="*"/>
+							        </Grid.ColumnDefinitions>
+									<StackLayout Grid.Column="0">
+		                                <Label 	 
+												Text="Name :" 
+												HorizontalTextAlignment ="End"
+												Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+		                                <Label 	
+												Text="Gamma :"
+												HorizontalTextAlignment ="End"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+										<Label 	
+												Text="Alpha :"
+												HorizontalTextAlignment ="End"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+		                            </StackLayout>
+									<StackLayout Grid.Column="1">
+		                                <Label 	HorizontalOptions="Center" 
+												Text="{Binding Agent.Name}" 
+												Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+		                                <Label Text="{Binding Agent.Gamma}"
+												HorizontalOptions="Center"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+										<Label Text="{Binding Agent.Alpha}"
+												HorizontalOptions="Center"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+		                            </StackLayout>
+									<StackLayout Grid.Column="2">
+		                                <Label 	Text="Algorithm :" 
+												HorizontalTextAlignment ="End"
+												Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+		                                <Label 	Text="Espoch :"
+												HorizontalTextAlignment ="End"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+										<Label 	
+												Text="Epsilon :"
+												HorizontalTextAlignment ="End"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+		                            </StackLayout>
+									<StackLayout Grid.Column="3">
+		                                <Label 	HorizontalOptions="Center" 
+												Text="{Binding Agent.Algorithm}"
+												Style="{DynamicResource iMLListItemDetailTextStyle}"/>
+		                                <Label Text="{Binding Agent.Espoch}"
+												HorizontalOptions="Center"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+		                                        StyleId="2.4GHzPassword"/>
+										<Label Text="{Binding Agent.Epsilon}"
+												HorizontalOptions="Center"
+		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
+		                                        />
+		                            </StackLayout>
+								</Grid>
+						
+								<local:SectionDivider/>
+								<StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+             
+                                        <Button
+                                            
+                                            Text="Delete this model"                                     
+                                            x:Name="ButtonDelete"
+											Command="{Binding DeleteCommand}">
+                                            <Button.FontAttributes>
+                                                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+                                            </Button.FontAttributes>
+                                            <Button.BackgroundColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource PrimaryDark}" iOS="Transparent"/>
+                                            </Button.BackgroundColor>
+                                            <Button.TextColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="White" iOS="{StaticResource PrimaryDark}"/>
+                                            </Button.TextColor>
+                                            <Button.BorderWidth>
+                                                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+                                            </Button.BorderWidth> 
+                                            <Button.BorderColor>
+                                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+                                            </Button.BorderColor> 
+                                        </Button>
+                                    </StackLayout>
                                 <local:FooterDivider/>
                             </StackLayout>
                         </local:CardView>
@@ -82,7 +192,7 @@
                             <local:LabelSection Text="Trainning"/>
                                 <local:HeaderDivider/>
                                 <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White">
-             
+             							
                                         <Button
                                             
                                             Text="Train this model"                                     
@@ -105,14 +215,84 @@
                                             </Button.BorderColor> 
                                         </Button>
                                     </StackLayout>
+								
                                 <local:FooterDivider/>
                         </StackLayout>
                     </local:CardView>
 
+					<local:CardView IsVisible="{Binding IsTraining}">
+                        <StackLayout Spacing="0">
+                            <!--Feedback-->
+                            <local:LabelSection Text="Feedback"/>
+                                <local:HeaderDivider/>
+								<StackLayout  HorizontalOptions="FillAndExpand" 
+                                         	VerticalOptions="Center" 
+                                          BackgroundColor="White"
+                                          Padding="{StaticResource StandardPadding}">
+                                <Label Text="Current Action" 
+                                       HorizontalOptions="Center" 
+                                       Style="{DynamicResource iMLListItemTextStyle}"/>
+                          	 	</StackLayout>
+								<local:SectionDivider/>
+                                <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+             							<Grid IsVisible="{Binding LoadingDetails, Converter={StaticResource InvertedBooleanConverter}}}" Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+             							<Grid.ColumnDefinitions>
+								            <ColumnDefinition Width="*"/>
+											<ColumnDefinition Width="*"/>
+							        	</Grid.ColumnDefinitions>
+										<Button Grid.Column="0" 
+											
+
+											Text="Correct"                                     
+                                            x:Name="ButtonCorrect"
+											Command="{Binding IncreaseReward}">
+                                            <Button.FontAttributes>
+                                                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+                                            </Button.FontAttributes>
+                                            <Button.BackgroundColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource PrimaryDark}" iOS="Transparent"/>
+                                            </Button.BackgroundColor>
+                                            <Button.TextColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="White" iOS="{StaticResource PrimaryDark}"/>
+                                            </Button.TextColor>
+                                            <Button.BorderWidth>
+                                                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+                                            </Button.BorderWidth> 
+                                            <Button.BorderColor>
+                                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+                                            </Button.BorderColor> 
+                                        </Button>
+										<Button 
+                                            Grid.Column="1"
+                                            Text="Incorrect"                                     
+                                            x:Name="ButtonIncorrect"
+											Command="{Binding ReduceReward}">
+                                            <Button.FontAttributes>
+                                                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+                                            </Button.FontAttributes>
+                                            <Button.BackgroundColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource PrimaryDark}" iOS="Transparent"/>
+                                            </Button.BackgroundColor>
+                                            <Button.TextColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="White" iOS="{StaticResource PrimaryDark}"/>
+                                            </Button.TextColor>
+                                            <Button.BorderWidth>
+                                                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+                                            </Button.BorderWidth> 
+                                            <Button.BorderColor>
+                                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+                                            </Button.BorderColor> 
+                                        </Button>
+										</Grid>
+                                    </StackLayout>
+                                <local:FooterDivider/>
+                        </StackLayout>
+                    </local:CardView>
+						
 					<local:CardView IsVisible="{Binding HasAnyLog}">
                             <!--Logs-->
                             <StackLayout Spacing="0">
-                                <local:LabelSection Text="Logs" StyleId="MoreSessionsSection"/>
+                                <local:LabelSection Text="Logs"/>
                                 <local:HeaderDivider/>
                                 <StackLayout IsVisible="{Binding IsBusy}"
                                              HorizontalOptions="FillAndExpand"
@@ -126,19 +306,19 @@
                                     </ActivityIndicator>
                                     <Label Text="Loading Logs..."
                                            HorizontalOptions="Center"
-                                           Style="{DynamicResource EvolveListItemTextStyle}"/>
+                                           Style="{DynamicResource iMLListItemTextStyle}"/>
                                 </StackLayout>
                                 <local:NonScrollableListView
-                                    x:Name="ListViewSessions"
-                                    ItemsSource="{Binding Logs}"
-                                    RowHeight="120">
+                                    x:Name="ListViewLogs"
+                                    ItemsSource="{Binding Agent.Logs}"
+                                    RowHeight="88">
                                     <local:NonScrollableListView.SeparatorColor>
                                         <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ListSeparator}"/>
                                     </local:NonScrollableListView.SeparatorColor>
                                     <local:NonScrollableListView.ItemTemplate>
                                         <DataTemplate>
                                             <ViewCell>
-                                                <local:ModelCell/>
+                                                <local:LogCell/>
                                             </ViewCell>
                                         </DataTemplate>
                                     </local:NonScrollableListView.ItemTemplate>

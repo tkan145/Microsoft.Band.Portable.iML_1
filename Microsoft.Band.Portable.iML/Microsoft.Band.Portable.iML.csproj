@@ -72,6 +72,12 @@
     <EmbeddedResource Include="Views\Cell\ModelCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Pages\Train\TrainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Cell\LogCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -177,6 +183,14 @@
     <Compile Include="DataStore\Abstraction\ILocalTable.cs" />
     <Compile Include="DataStore\DBQuery.cs" />
     <Compile Include="Helpers\AsyncSemaphore.cs" />
+    <Compile Include="ViewModels\AgentDetailsViewModel.cs" />
+    <Compile Include="Views\Pages\Train\TrainPage.xaml.cs">
+      <DependentUpon>TrainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Cell\LogCell.xaml.cs">
+      <DependentUpon>LogCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\TrainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -260,6 +274,7 @@
     <Folder Include="DataStore\Abstraction\" />
     <Folder Include="DataStore\Mock\" />
     <Folder Include="DataStore\LocalDatabase\" />
+    <Folder Include="Views\Pages\Train\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
