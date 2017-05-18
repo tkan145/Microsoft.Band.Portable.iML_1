@@ -50,7 +50,7 @@ namespace Microsoft.Band.Portable.iML
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			(BindingContext as NewAIViewModel)?.OnDisappearing();
+			//(BindingContext as NewAIViewModel)?.OnDisappearing();
 			BindingContext = null;
 		}
 

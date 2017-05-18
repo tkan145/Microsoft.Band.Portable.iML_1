@@ -16,30 +16,13 @@ namespace Microsoft.Band.Portable.iML
 		public IEnumerable<BandDeviceInfo> pairedBands;
 		public BandClient bandClient { get; protected set; }
 		public BandDeviceInfo bandInfo;
+
+		// Get all band sensor data 
+		public BandDataSource bandData;
+
 		public BandConnection()
 		{
-
-		}
-
-		public async Task ConnectBands()
-		{
-			if (pairedBands == null)
-			{
-				await FindBands();
-			}
-			this.statusMessage = "Connecting ....";
-
-			BandClient client = await BandClientManager.Instance.ConnectAsync(this.pairedBands.FirstOrDefault());
-			if (client == null)
-			{
-				return;
-			}
-			else
-			{
-				this.bandClient = client;
-				this.BandConnectionStatus = "Connected";
-				this.statusMessage = "You're all set, Band has been configured.";
-			}
+			bandData = new BandDataSource(this.bandClient);
 		}
 
 		public async Task FindBands()
@@ -76,6 +59,37 @@ namespace Microsoft.Band.Portable.iML
 				}
 			}
 		}
+		public async Task ConnectBands()
+		{
+			if (pairedBands == null)
+			{
+				await FindBands();
+			}
+			this.statusMessage = "Connecting ....";
+
+			BandClient client = await BandClientManager.Instance.ConnectAsync(this.pairedBands.FirstOrDefault());
+			if (client == null)
+			{
+				return;
+			}
+			else
+			{
+				this.bandClient = client;
+				this.BandConnectionStatus = "Connected";
+				this.statusMessage = "You're all set, Band has been configured.";
+			}
+		}
+
+		public Task DisconnectBand()
+		{
+			return DisconnectBand(bandClient);
+		}
+
+		private async Task DisconnectBand(BandClient bc)
+		{
+			await bc.DisconnectAsync();
+		}
+
 
 		private void UpdateSensorData(string sensorName)
 		{
@@ -118,15 +132,7 @@ namespace Microsoft.Band.Portable.iML
 			set { Set(ref bandConnectionStatus, value); }
 		}
 
-		public Task DisconnectBand()
-		{
-			return DisconnectBand(bandClient);
-		}
 
-		private async Task DisconnectBand(BandClient bc)
-		{
-			await bc.DisconnectAsync();
-		}
 
 	}
 }

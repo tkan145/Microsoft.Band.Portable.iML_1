@@ -6,6 +6,8 @@ using Xamarin.Forms;
 using System.Linq;
 using SQLite;
 using System.Collections;
+using PCLStorage;
+using System.Diagnostics;
 
 namespace Microsoft.Band.Portable.iML.DataStore.Local
 {
@@ -27,12 +29,13 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 
 		public void DropTable()
 		{
-			table = null;
+
 		}
 
 		#region IBaseStore Implementation
 		public async Task InitializeStore()
 		{
+			IFolder folder = FileSystem.Current.LocalStorage;
 			if (storeManager == null)
 				storeManager = DependencyService.Get<IStoreManager>();
 
@@ -46,6 +49,8 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 			await InitializeStore().ConfigureAwait(false);
 			using (await StoreManager.locker.LockAsync())
 			{
+
+				//return await StoreManager.store.Table.GetItemsAsync().
 				return await Table.ToListAsync().ConfigureAwait(false);
 			}
 		}
@@ -85,9 +90,13 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 			await InitializeStore().ConfigureAwait(false);
 			using (await StoreManager.locker.LockAsync())
 			{
-				await StoreManager.store.DeleteAsync(item).ConfigureAwait(false);
+				//Debug.WriteLine("Table{0}", Table.CountAsync());
+				await storeManager.DropEverythingAsync().ConfigureAwait(false);
+				//await StoreManager.store.DeleteAsync(item).ConfigureAwait(false);
+
+				return true;
 			}
-			return true;
+
 		}
 		#endregion
 	}

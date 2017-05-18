@@ -22,19 +22,12 @@ namespace Microsoft.Band.Portable.iML
 
 		async Task ExecuteSaveCommand()
 		{
-
-			//await Navigation.PopModalAsync(true);
-			if (string.IsNullOrWhiteSpace(Name))
-				Debug.WriteLine("Model: ", Model.Name);
-			else
-				Debug.WriteLine(Name);
-			var model = new iMLModel();
-			model.Name = Name;
-			await StoreManager.ModelStore.InsertAsync(model);
+			// Save model
+			await StoreManager.ModelStore.InsertAsync(Model);
 			await Navigation.PopModalAsync();
-			//await Task.Delay(1000);
 		}
 
+		#region Property
 		private string name;
 		public string Name
 		{
@@ -42,32 +35,47 @@ namespace Microsoft.Band.Portable.iML
 			set { Set(ref name, value); }
 		}
 
-		public iMLModel newModel = new iMLModel();
+		private string description;
+		public string Description
+		{
+			get { return description; }
+			set { Set(ref description, value); }
+		}
 
+		private double alpha;
+		public double Alpha
+		{
+			get { return alpha; }
+			set { Set(ref alpha, value); }
+		}
 
+		private double gamma;
+		public double Gamma
+		{
+			get { return gamma; }
+			set { Set(ref gamma, value); }
+		}
+
+		private string algorithm;
+		public string Algorithm
+		{
+			get { return algorithm; }
+			set { Set(ref algorithm, value); }
+		}
+
+		private string filter;
+		public string Filter
+		{
+			get { return filter; }
+			set { Set(ref filter, value); }
+		}
 		bool isAdvanceOption;
 		public bool IsAdvanceOption
 		{
 			get { return isAdvanceOption; }
 			set { Set(ref isAdvanceOption, value); }
 		}
-
-
-		public void Save()
-		{
-			SaveModel();
-		}
-
-		private void SaveModel()
-		{
-
-		}
-
-		internal void OnDisappearing()
-		{
-			//_transaction.Dispose();		}
-
-		}
+		#endregion
 	}
 }
 

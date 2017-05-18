@@ -54,7 +54,7 @@
           			</chart:NumericalAxis>   
 
 				</chart:SfChart.SecondaryAxis>
-           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding Data}" XBindingPath="Eposch" YBindingPath="Reward"/>
+           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding Agents}" XBindingPath="Eposch" YBindingPath="AccumulativeReward"/>
        		</chart:SfChart>
         </Grid>
 		
@@ -118,6 +118,7 @@
 												Text="Alpha :"
 												HorizontalTextAlignment ="End"
 		                                        Style="{DynamicResource iMLListItemDetailTextStyleBold}"/>
+									
 		                            </StackLayout>
 									<StackLayout Grid.Column="1">
 		                                <Label 	HorizontalOptions="Center" 
@@ -146,10 +147,10 @@
 		                                <Label 	HorizontalOptions="Center" 
 												Text="{Binding Agent.Algorithm}"
 												Style="{DynamicResource iMLListItemDetailTextStyle}"/>
-		                                <Label Text="{Binding Agent.Espoch}"
+		                                <Label Text="{Binding Agent.Eposch}"
 												HorizontalOptions="Center"
 		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
-		                                        StyleId="2.4GHzPassword"/>
+		                                        />
 										<Label Text="{Binding Agent.Epsilon}"
 												HorizontalOptions="Center"
 		                                        Style="{DynamicResource iMLListItemDetailTextStyle}"
@@ -191,6 +192,15 @@
                             <!--Train-->
                             <local:LabelSection Text="Trainning"/>
                                 <local:HeaderDivider/>
+								<StackLayout  HorizontalOptions="FillAndExpand" 
+                                         	VerticalOptions="Center" 
+                                          BackgroundColor="White"
+                                          Padding="{StaticResource StandardPadding}">
+                                <Label Text="{Binding Data}" 
+                                       HorizontalOptions="Center" 
+                                       Style="{DynamicResource iMLListItemTextStyle}"/>
+                          	 	</StackLayout>
+								<local:SectionDivider/>
                                 <StackLayout Padding="{StaticResource StandardPadding}" BackgroundColor="White">
              							
                                         <Button

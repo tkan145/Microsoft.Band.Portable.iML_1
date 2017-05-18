@@ -11,15 +11,12 @@ namespace Microsoft.Band.Portable.iML
 	{
 		private StringBuilder data = new StringBuilder();
 		private BandClient bandClient;
-		private string name;
 
-
-
-		public BandDataSource(BandClient bandClient, string name)
+		public BandDataSource(BandClient bandClient)
 		{
 
 			this.bandClient = bandClient;
-			this.name = name;
+			//this.name = name;
 		}
 
 		public Task SendStartCollectSensorAsync()
@@ -58,58 +55,38 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
-		public Task StartSensorAsync()
+		private async Task StartAccelerometerReadingAsync()
 		{
-			SendStartCollectSensorAsync();
-			return StartSensorAsync(bandClient);
+			await SendStartCollectSensorAsync();
+			await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
 		}
 
-		public async Task StartSensorAsync(BandClient bandClient)
-		{
-			try
-			{
-				// Start Acceloremeter data
-				await this.StartAccelerometerRateAsync(bandClient);
-				// Start gesture detector
-				//await this.StartGestureDectectorAsync(bandClient);
-			}
-			catch (Exception e)
-			{
-				throw e;
-			}
-		}
-
-		public async Task StopAccelerometerReadingAsync(BandClient bandClient)
+		private async Task StopAccelerometerReadingAsync()
 		{
 			await bandClient.SensorManager.Accelerometer.StopReadingsAsync();
 			await SendStopCollectSensorAsync();
-			// Save data to csv file here
 		}
 
-		public async Task StartAccelerometerRateAsync(BandClient bandClient)
+		public async Task<string> StartCollectAccelerometerDataAsync()
 		{
-			//bool accelerometerRateConsentGranted;
-
-			//		// Check wheter the user has granted access to the Accelorometer sensor
-			//		if (bandClient.SensorManager.Accelerometer.GetCurrentUserConsent() == UserConsent.Granted)
-			//		{
-			//			accelerometerRateConsentGranted = true;
-			//		}
-			//		else
-			//		{
-			//			accelerometerRateConsentGranted = await bandClient.SensorManager.Accelerometer.RequestUserConsentAsync();
-			//		}
-
-			//		if (accelerometerRateConsentGranted)	//		{
-
 			// Subscribe to start collect acceloremeter data
 			bandClient.SensorManager.Accelerometer.ReadingChanged += HandleAccelerometerChangeReading;
 			// Start reading
-			await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
+			try
+			{
+				await StartAccelerometerReadingAsync();
 
-			// Read 4s then stop reading and save to file
-			await Task.Delay(4000);
-			await StopAccelerometerReadingAsync(bandClient);
+				// Read 4s then stop reading and save to file
+				await Task.Delay(4000);
+
+				await StopAccelerometerReadingAsync();
+				//await SaveFileToDiskAsync(data);
+				return data.ToString();
+			}
+			catch (BandException ex)
+			{
+				throw ex;
+			}
 		}
 
 		//// Event Handling of the Accelerometer will require some extra work to handle

@@ -11,6 +11,7 @@ namespace Microsoft.Band.Portable.iML
 			Name = "";
 			Description = "";
 			Algorithm = "";
+			Alpha = 1;
 			Gamma = 0.2;
 			MaxReward = 1;
 			MinReward = -1;
@@ -22,11 +23,14 @@ namespace Microsoft.Band.Portable.iML
 		//public string ID { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public string Algorithm { get; set; }
+
 		public float MaxReward { get; set; }
 		public float MinReward { get; set; }
 		//public virtual ICollection<Log> Logs { get; set; }
+		public double Alpha { get; set; }
 		public double Gamma { get; set; }
+		public string Algorithm { get; set; }
+		public string Filter { get; set; }
 
 		public int Eposch { get; set; }
 		public double AccumulativeReward { get; set; }
@@ -36,6 +40,7 @@ namespace Microsoft.Band.Portable.iML
 	public class Log : BaseDataObject
 	{
 		//public string ID { get; set; }
+		public string ModelId { get; set; }
 		public string State { get; set; }
 		public string Action { get; set; }
 		public float Reward { get; set; }
