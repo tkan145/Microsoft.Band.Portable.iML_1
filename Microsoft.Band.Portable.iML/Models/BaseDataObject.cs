@@ -1,6 +1,6 @@
 ﻿using System;
 using GalaSoft.MvvmLight;
-
+using SQLite;
 namespace Microsoft.Band.Portable.iML
 {
 	public interface IBaseDataObject
@@ -16,6 +16,7 @@ namespace Microsoft.Band.Portable.iML
 		}
 
 		//[Newtonsoft.Json.JsonProperty("Id")]
+		[PrimaryKey]
 		public string Id { get; set; }
 
 	}

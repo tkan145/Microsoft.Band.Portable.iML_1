@@ -41,10 +41,16 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 				IsInitialized = false;
 				var dbId = Settings.DatabaseId;
 				var dbName = $"store{dbId}.db3";
-				//	//store = new SQLiteConnection(path);
+
 				store = DependencyService.Get<IDatabaseConnection>().DbConnection(dbName);
-				await store.CreateTableAsync<iMLModel>(); ;
-				await store.CreateTableAsync<Log>();
+				await store.CreateTableAsync<iMLModel>().ContinueWith(t =>
+				{
+					Console.WriteLine("Table iMLModel created!");
+				});
+				await store.CreateTableAsync<Log>().ContinueWith(t =>
+				{
+					Console.WriteLine("Table Log created!");
+				});
 			}
 			// Init store
 		}

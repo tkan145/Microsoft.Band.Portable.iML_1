@@ -60,7 +60,12 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 		//	return sessions[0];
 		//}
 
-		public override string Identifier => "Session";
+		public Task DropModel()
+		{
+			return Task.FromResult(true);
+		}
+
+		public override string Identifier => "iMLModel";
 	}
 
 }
