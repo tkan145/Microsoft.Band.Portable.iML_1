@@ -87,6 +87,9 @@
 
                     <local:PickerCell Label="Filter" Title="Filter" SelectedValue="{Binding Model.Filter}">
                         <x:String>Buterworth LowPass</x:String>
+						<x:String>LowPass</x:String>
+						<x:String>HighPass</x:String>
+						<x:String>Moving Average</x:String>
                     </local:PickerCell>
                 </TableSection>
             </TableRoot>

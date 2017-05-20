@@ -19,7 +19,7 @@ namespace Microsoft.Band.Portable.iML
 		public DashboardViewModel(INavigation navigation) : base(navigation)
 		{
 			NextForceRefresh = DateTime.UtcNow.AddMinutes(30);
-			Bands = new ObservableRangeCollection<BandDeviceInfo>();
+			//Bands = new ObservableRangeCollection<BandDeviceInfo>();
 
 			band = App.current.Bands;
 
@@ -83,6 +83,7 @@ namespace Microsoft.Band.Portable.iML
 				IsBusy = true;
 				var tasks = new Task[]
 				{
+
 						ExecuteLoadBandsCommandAsync(),
 						ExecuteLoadModelsCommandAsync()
 					};
@@ -117,19 +118,19 @@ namespace Microsoft.Band.Portable.iML
 			if (LoadingBands)
 				return;
 			LoadingBands = true;
-			FoundBands = BandConfigured = true;
 #if DEBUG
 			await Task.Delay(1000);
 #endif
-
 			try
 			{
-				//var connection = App.current.Bands;
-				await band.FindBands();
+				if (band.bandClient != null && band.bandClient.IsConnected)
+				{
+					return;
+				}
+				FoundBands = await band.FindBands();
 				this.StatusMessage = band.StatusMessage;
 				this.PairedBand = band.BandName;
 				this.Status = band.BandConnectionStatus;
-
 			}
 			catch (Exception ex)
 			{
@@ -138,6 +139,7 @@ namespace Microsoft.Band.Portable.iML
 			finally
 			{
 				LoadingBands = false;
+
 			}
 		}
 
@@ -180,50 +182,45 @@ namespace Microsoft.Band.Portable.iML
 
 		RelayCommand configureBandCommand;
 		public RelayCommand ConfigureBandCommand =>
-		configureBandCommand ?? (configureBandCommand = new RelayCommand(async () => await ExecuteConnectCommand()));
+		configureBandCommand ?? (configureBandCommand = new RelayCommand(async () => await ExecuteConnectCommand(), () => foundBands));
 
 		async Task ExecuteConnectCommand()
 		{
-			if (band.bandClient.IsConnected)
+			if (band.bandClient != null && band.bandClient.IsConnected)
 			{
 				try
 				{
-					await band.DisconnectBand();
+					this.StatusMessage = "Disconnecting...";
+					await band.DisconnectBand().ContinueWith(t =>
+													{
+														this.ButtonText = "Connect Band";
+														this.StatusMessage = band.StatusMessage;
+														this.Status = band.BandConnectionStatus;
+													});
 				}
 				catch (Exception ex)
 				{
-					this.statusMessage = "Disconnect" + ex;
+					this.statusMessage = "Disconnect Error" + ex;
 				}
 			}
-			//else
-			//{
-			//try
-			//{
-			// Connect must be called on a background thread.
-			//var result =
-			await band.ConnectBands();
 
-			//// callback that must be handled on the UI thread
-			//if (result != band.bandClient.IsConnected)
-			//{
-			//	this.statusMessage = "Connection failed: result=" + result;
-			//	return;
-			//}
-			this.StatusMessage = band.StatusMessage;
-			this.ButtonText = "Disconnect the Band";
-			this.Status = band.BandConnectionStatus;
-			//}
-			//catch (Exception ex)
-			//{
-			//	this.StatusMessage = "Connect" + ex;
-			//} 
-			//}
+			else
+			{
+				this.StatusMessage = "Connecting...";
+				await band.ConnectBands().ContinueWith(t =>
+								{
+									this.StatusMessage = band.StatusMessage;
+									this.ButtonText = "Disconnect the Band";
+									this.Status = band.BandConnectionStatus;
+								});
 
+			}
 		}
 		#endregion
 
 		#region Property
 		#region Band
+
 		bool loadingBands;
 		public bool LoadingBands
 		{
@@ -237,11 +234,18 @@ namespace Microsoft.Band.Portable.iML
 			set { Set(ref statusMessage, value); }
 		}
 
-		bool foundBands;
+		bool foundBands = false;
 		public bool FoundBands
 		{
 			get { return foundBands; }
-			set { Set(ref foundBands, value); }
+			set
+			{
+				if (Set(() => FoundBands, ref foundBands, value))
+				{
+					RaisePropertyChanged();
+					ConfigureBandCommand.RaiseCanExecuteChanged();
+				}
+			}
 		}
 
 		string status;

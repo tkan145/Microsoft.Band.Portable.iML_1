@@ -87,9 +87,21 @@
                             <Button Text="{Binding ButtonText}"
                                     Command="{Binding ConfigureBandCommand}"
                                     BackgroundColor="{StaticResource PrimaryDark}"
-                                    IsEnabled="true"
-                                    TextColor="White"
-                                    StyleId="2.4GHzSetUpButton"/>
+                                    IsEnabled="{Binding FoundBands}"
+								>
+								 	<Button.Style>
+           							 	<Style TargetType="Button">
+                							<Style.Triggers>
+                   							 	<Trigger TargetType="Button"  Property="IsEnabled" Value="False">
+                        							<Setter Property="TextColor" Value="Gray"></Setter>
+                    							</Trigger>
+												<Trigger TargetType="Button"  Property="IsEnabled" Value="True">
+                        							<Setter Property="TextColor" Value="White"></Setter>
+                    							</Trigger>
+                							</Style.Triggers>
+            							</Style>
+        							</Button.Style>
+							</Button>
                             <Label Text="{Binding StatusMessage}" HorizontalOptions="Center" 
                                    
                                    Style="{DynamicResource iMLListItemDetailTextStyle}"

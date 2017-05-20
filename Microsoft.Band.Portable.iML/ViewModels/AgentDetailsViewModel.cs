@@ -12,6 +12,7 @@ namespace Microsoft.Band.Portable.iML
 	public class AgentDetailsViewModel : BaseViewModel
 	{
 		iMLModel agent;
+		BandDataSource datasource;
 		public iMLModel Agent
 		{
 			get { return agent; }
@@ -28,22 +29,18 @@ namespace Microsoft.Band.Portable.iML
 			deleteCommand ?? (deleteCommand = new RelayCommand(async () => await ExecuteDeleteCommandAsync()));
 		public async Task ExecuteDeleteCommandAsync()
 		{
-
 			if (IsBusy)
 				return;
 
 			try
 			{
 				IsBusy = true;
-
-				//await StoreManager.ModelStore.RemoveAsync(Agent);
-				iMLModel result = await StoreManager.ModelStore.GetItemAsync(Agent.Id);
-				Debug.WriteLine("Count: {0}", result.Name);
+				await StoreManager.ModelStore.RemoveAsync(Agent);
 				await Navigation.PopToRootAsync();
 			}
 			catch (Exception ex)
 			{
-				MessagingService.Current.SendMessage(MessageKeys.Error, ex);
+				throw new Exception(ex.Message);
 			}
 			finally
 			{
@@ -87,7 +84,7 @@ namespace Microsoft.Band.Portable.iML
 			try
 			{
 				IsBusy = true;
-				var Data = await App.current.Bands.bandData.StartCollectAccelerometerDataAsync();
+				await App.current.Bands.bandData.StartCollectAccelerometerDataAsync();
 			}
 			catch (Exception ex)
 			{

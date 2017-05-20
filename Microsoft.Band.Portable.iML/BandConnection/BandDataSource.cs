@@ -4,7 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.Band.Portable.Sensors;
 using System.Text;
 using GalaSoft.MvvmLight;
-
+using PCLStorage;
+using System.Diagnostics;
+using Xamarin.Forms;
 namespace Microsoft.Band.Portable.iML
 {
 	public class BandDataSource : ObservableObject
@@ -55,33 +57,56 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
+		public Task StartSensorsAsync()
+		{
+			return StartSensorsAsync(bandClient);
+		}
+
+		private async Task StartSensorsAsync(BandClient bandClient)
+		{
+			try
+			{
+				// Start Accelerometer 
+				await this.StartAccelerometerReadingAsync();
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
+		}
+
 		private async Task StartAccelerometerReadingAsync()
 		{
-			await SendStartCollectSensorAsync();
+			//var userConsenting = Sensor as IUserConsentingBandSensor<T>;
+			//if (userConsenting == null
+			//   || userConsenting.UserConsented == UserConsent.Granted
+			//   || await userConsenting.RequestUserConsent())
+			//{
+			//await SendStartCollectSensorAsync();
+			bandClient.SensorManager.Accelerometer.ReadingChanged += HandleAccelerometerChangeReading;
 			await bandClient.SensorManager.Accelerometer.StartReadingsAsync();
+			//}
 		}
 
 		private async Task StopAccelerometerReadingAsync()
 		{
 			await bandClient.SensorManager.Accelerometer.StopReadingsAsync();
-			await SendStopCollectSensorAsync();
+			bandClient.SensorManager.Accelerometer.ReadingChanged -= HandleAccelerometerChangeReading;
 		}
 
-		public async Task<string> StartCollectAccelerometerDataAsync()
+		public async Task StartCollectAccelerometerDataAsync()
 		{
-			// Subscribe to start collect acceloremeter data
-			bandClient.SensorManager.Accelerometer.ReadingChanged += HandleAccelerometerChangeReading;
-			// Start reading
 			try
 			{
+				await SendStartCollectSensorAsync();
 				await StartAccelerometerReadingAsync();
 
 				// Read 4s then stop reading and save to file
 				await Task.Delay(4000);
-
+				Debug.WriteLine("Save here");
+				await DependencyService.Get<IFileHelper>().SaveTextFile("test1.csv", data.ToString());
 				await StopAccelerometerReadingAsync();
-				//await SaveFileToDiskAsync(data);
-				return data.ToString();
+				await SendStopCollectSensorAsync();
 			}
 			catch (BandException ex)
 			{
@@ -94,7 +119,7 @@ namespace Microsoft.Band.Portable.iML
 		private void HandleAccelerometerChangeReading(object sender, BandSensorReadingEventArgs<BandAccelerometerReading> e)
 		{
 			var reading = e.SensorReading;
-			data.AppendLine(string.Format("{0:F},{1:F},{3:F}", reading.AccelerationX, reading.AccelerationY, reading.AccelerationZ));
+			data.AppendLine(string.Format("{0:F},{1:F},{2:F}", reading.AccelerationX, reading.AccelerationY, reading.AccelerationZ));
 		}
 	}
 }
