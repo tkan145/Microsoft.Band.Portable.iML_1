@@ -15,7 +15,7 @@ namespace Microsoft.Band.Portable.iML.Droid
 			{
 				throw new ArgumentNullException("dbName");
 			}
-			var path = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal), dbName);
+			var path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), dbName);
 			return new SQLiteAsyncConnection(path);
 		}
 	}

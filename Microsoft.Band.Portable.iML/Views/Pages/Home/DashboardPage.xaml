@@ -111,8 +111,8 @@
 					</StackLayout>
 				</local:CardView>
 				
-				<local:CardView>
-					<!--Calibration-->
+				<!--<local:CardView>
+					Calibration
                     <local:CardView.IsVisible>
                         <OnPlatform x:TypeArguments="x:Boolean" Android="true" iOS="true" WinPhone="true"/>
                     </local:CardView.IsVisible>
@@ -178,7 +178,7 @@
                         <local:SectionDivider/>
                         <local:FooterDivider/>
                     </StackLayout>
-                </local:CardView>
+                </local:CardView>-->
 
 
 				<local:CardView>

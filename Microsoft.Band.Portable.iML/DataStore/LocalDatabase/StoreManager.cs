@@ -45,11 +45,11 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 				store = DependencyService.Get<IDatabaseConnection>().DbConnection(dbName);
 				await store.CreateTableAsync<iMLModel>().ContinueWith(t =>
 				{
-					Console.WriteLine("Table iMLModel created!");
+					//Console.WriteLine("Table iMLModel created!");
 				});
 				await store.CreateTableAsync<Log>().ContinueWith(t =>
 				{
-					Console.WriteLine("Table Log created!");
+					//Console.WriteLine("Table Log created!");
 				});
 			}
 			// Init store

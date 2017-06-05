@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Syncfusion.SfChart.XForms;
 using Xamarin.Forms;
 
 namespace Microsoft.Band.Portable.iML
@@ -9,15 +9,18 @@ namespace Microsoft.Band.Portable.iML
 	{
 		AgentDetailsViewModel ViewModel => vm ?? (vm = BindingContext as AgentDetailsViewModel);
 		AgentDetailsViewModel vm;
+
 		public AgentDetailsPage(iMLModel model)
 		{
 			InitializeComponent();
 			BindingContext = new AgentDetailsViewModel(Navigation, model);
 
-			ButtonTrain.Clicked += async (sender, e) =>
-			{
-				await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new TrainPage(ViewModel.Agent)));
-			};
+			//ButtonTrain.Clicked += async (sender, e) =>
+			//{
+			//	await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new TrainPage(ViewModel.Agent)));
+			//};
+
+
 		}
 
 
@@ -42,12 +45,14 @@ namespace Microsoft.Band.Portable.iML
 		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+			//ViewModel.SubscribeMessage();
 			UpdatePage();
 		}
 
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
+			ViewModel.UnsubscribeMessage();
 			UpdatePage();
 		}
 

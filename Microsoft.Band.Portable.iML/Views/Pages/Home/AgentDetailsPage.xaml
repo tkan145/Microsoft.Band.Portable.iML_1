@@ -34,7 +34,7 @@
 					</chart:ChartLegend>
 				</chart:SfChart.Legend>
                 <chart:SfChart.Title>
-					<chart:ChartTitle Text="Reward" TextColor="White"/>
+					<chart:ChartTitle Text=" Learning Performance" TextColor="White"/>
 				</chart:SfChart.Title> 
 				<chart:SfChart.PrimaryAxis>
                 	<chart:CategoryAxis>
@@ -45,16 +45,17 @@
            		</chart:SfChart.PrimaryAxis>
 
             	<chart:SfChart.SecondaryAxis>
-               		<chart:NumericalAxis Minimum="-10" Maximum="10">
+               		<chart:NumericalAxis>
 						<chart:NumericalAxis.Title>
            
-                 			<chart:ChartAxisTitle Text="Reward" TextColor="White"></chart:ChartAxisTitle>
+                 			<chart:ChartAxisTitle Text="Total reward" TextColor="White"></chart:ChartAxisTitle>
            
           				</chart:NumericalAxis.Title>    
           			</chart:NumericalAxis>   
 
 				</chart:SfChart.SecondaryAxis>
-           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding Agents}" XBindingPath="Eposch" YBindingPath="AccumulativeReward"/>
+           		<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding XData}" XBindingPath="Eposch" YBindingPath="AccumulativeReward"/>
+				<!--<chart:FastLineSeries Label="X" x:Name="XAxis" ItemsSource ="{Binding XData}"/>-->
        		</chart:SfChart>
         </Grid>
 		
@@ -95,7 +96,7 @@
                                        HorizontalOptions="Center" 
                                        Style="{DynamicResource iMLListItemTextStyle}"/>
                           	 	</StackLayout>
-								<Grid IsVisible="{Binding LoadingDetails, Converter={StaticResource InvertedBooleanConverter}}}" Padding="{StaticResource StandardPadding}" BackgroundColor="White">
+								<Grid IsVisible="{Binding IsBusy, Converter={StaticResource InvertedBooleanConverter}}}" Padding="{StaticResource StandardPadding}" BackgroundColor="White">
 						  	 		<Grid.RowDefinitions>
             							<RowDefinition Height="Auto"/>
 							        </Grid.RowDefinitions>
@@ -182,6 +183,26 @@
                                                 <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
                                             </Button.BorderColor> 
                                         </Button>
+										<Button
+                                            Text="Load Pre-trained agent"                                     
+                                            x:Name="ButtonLoadAgent"
+											Command="{Binding LoadPreTrainedAgentCommand}">
+                                            <Button.FontAttributes>
+                                                <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
+                                            </Button.FontAttributes>
+                                            <Button.BackgroundColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="{StaticResource PrimaryDark}" iOS="Transparent"/>
+                                            </Button.BackgroundColor>
+                                            <Button.TextColor>
+                                                <OnPlatform x:TypeArguments="Color" Android="White" iOS="{StaticResource PrimaryDark}"/>
+                                            </Button.TextColor>
+                                            <Button.BorderWidth>
+                                                <OnPlatform x:TypeArguments="x:Double" iOS="1"/>
+                                            </Button.BorderWidth> 
+                                            <Button.BorderColor>
+                                                <OnPlatform x:TypeArguments="Color" iOS="{StaticResource ButtonBorder}"/>
+                                            </Button.BorderColor> 
+                                        </Button>
                                     </StackLayout>
                                 <local:FooterDivider/>
                             </StackLayout>
@@ -205,7 +226,7 @@
              							
                                         <Button
                                             
-                                            Text="Train this model"                                     
+                                            Text="{Binding TrainButtonText}"                                     
                                             x:Name="ButtonTrain"
 											Command="{Binding TrainCommand}">
                                             <Button.FontAttributes>
@@ -230,16 +251,16 @@
                         </StackLayout>
                     </local:CardView>
 
-					<local:CardView IsVisible="{Binding IsTraining}">
+						<!--Use Message Service instead-->
+					<!--<local:CardView IsVisible="{Binding IsTraining}">
                         <StackLayout Spacing="0">
-                            <!--Feedback-->
                             <local:LabelSection Text="Feedback"/>
                                 <local:HeaderDivider/>
 								<StackLayout  HorizontalOptions="FillAndExpand" 
                                          	VerticalOptions="Center" 
                                           BackgroundColor="White"
                                           Padding="{StaticResource StandardPadding}">
-                                <Label Text="Current Action" 
+                                <Label Text="{Binding ActionResult}" 
                                        HorizontalOptions="Center" 
                                        Style="{DynamicResource iMLListItemTextStyle}"/>
                           	 	</StackLayout>
@@ -251,11 +272,10 @@
 											<ColumnDefinition Width="*"/>
 							        	</Grid.ColumnDefinitions>
 										<Button Grid.Column="0" 
-											
-
 											Text="Correct"                                     
                                             x:Name="ButtonCorrect"
-											Command="{Binding IncreaseReward}">
+											Command="{Binding RewardCommand}"
+											CommandParameter = "true">
                                             <Button.FontAttributes>
                                                 <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
                                             </Button.FontAttributes>
@@ -276,7 +296,8 @@
                                             Grid.Column="1"
                                             Text="Incorrect"                                     
                                             x:Name="ButtonIncorrect"
-											Command="{Binding ReduceReward}">
+											Command="{Binding RewardCommand}"
+											CommandParameter = "false">
                                             <Button.FontAttributes>
                                                 <OnPlatform x:TypeArguments="FontAttributes" iOS="Bold"/>
                                             </Button.FontAttributes>
@@ -297,7 +318,7 @@
                                     </StackLayout>
                                 <local:FooterDivider/>
                         </StackLayout>
-                    </local:CardView>
+                    </local:CardView>-->
 						
 					<local:CardView IsVisible="{Binding HasAnyLog}">
                             <!--Logs-->

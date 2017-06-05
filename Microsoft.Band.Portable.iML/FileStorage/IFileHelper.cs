@@ -5,8 +5,13 @@ namespace Microsoft.Band.Portable.iML
 {
 	public interface IFileHelper
 	{
-		string GetLocalFilePath(string filename);
-		Task SaveTextFile(string fileName, string text);
-		Task<string> LoadText(string fileName);
+		bool Exist(string fileName);
+		Task WriteAllText(string fileName, string text);
+		Task<string> ReadAllText(string fileName);
+		//string GetLocalFilePath(string filename);
+
+
+		double[,] LoadCsv(string fileName);
+
 	}
 }

@@ -113,7 +113,7 @@ namespace Microsoft.Band.Portable.iML
 
 			// Hook up to the sensor ReadingChanged event
 			sensor.ReadingChanged += ValueChangedEventHandler;
-			await sensor.StartReadingsAsync(BandSensorSampleRate.Ms128);
+			await sensor.StartReadingsAsync(BandSensorSampleRate.Ms32);
 		}
 
 		#region Property

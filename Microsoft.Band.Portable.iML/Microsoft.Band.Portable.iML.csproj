@@ -178,7 +178,6 @@
     <Compile Include="DataStore\LocalDatabase\BaseStore.cs" />
     <Compile Include="DataStore\LocalDatabase\StoreManager.cs" />
     <Compile Include="DataStore\LocalDatabase\LogStore.cs" />
-    <Compile Include="Helpers\IFileHelper.cs" />
     <Compile Include="DataStore\Abstraction\IDatabaseConnection.cs" />
     <Compile Include="DataStore\Abstraction\ILocalTable.cs" />
     <Compile Include="DataStore\DBQuery.cs" />
@@ -199,6 +198,29 @@
     <Compile Include="BandConnection\BaseBandViewModel.cs" />
     <Compile Include="BandConnection\BandClientViewModel.cs" />
     <Compile Include="BandConnection\SensorViewModel.cs" />
+    <Compile Include="Filter\LowpassFilter.cs" />
+    <Compile Include="Filter\HighpassFilter.cs" />
+    <Compile Include="Sensor Processing\PitchAndRoll.cs" />
+    <Compile Include="FileStorage\IFileHelper.cs" />
+    <Compile Include="Sensor Processing\SMA.cs" />
+    <Compile Include="Filter\SlidingWindow.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="RL\Episode.cs" />
+    <Compile Include="RL\State.cs" />
+    <Compile Include="RL\Action.cs" />
+    <Compile Include="RL\TDMethods\QLearning.cs" />
+    <Compile Include="RL\QValue\QValue.cs" />
+    <Compile Include="RL\Environment.cs" />
+    <Compile Include="RL\MicrosoftBandEnvironment.cs" />
+    <Compile Include="RL\LearningAgent.cs" />
+    <Compile Include="RL\LearningRate.cs" />
+    <Compile Include="RL\Policy.cs" />
+    <Compile Include="RL\QFunction.cs" />
+    <Compile Include="RL\Exploration Policy\IExplorationPolicy.cs" />
+    <Compile Include="RL\Exploration Policy\EpsilonGreedyExploration.cs" />
+    <Compile Include="RL\TDMethods\Sarsa.cs" />
+    <Compile Include="RL\Exploration Policy\TabuSearchExploration.cs" />
+    <Compile Include="Filter\ExponentialMVA.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -240,9 +262,6 @@
     <Reference Include="GalaSoft.MvvmLight.Extras">
       <HintPath>..\packages\Portable.MvvmLightLibs.5.0.2.0\lib\portable-net45+wp8+wpa81+netcore45+monoandroid+monotouch\GalaSoft.MvvmLight.Extras.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="PCLStorage.Abstractions">
       <HintPath>..\packages\PCLStorage.1.0.2\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLStorage.Abstractions.dll</HintPath>
     </Reference>
@@ -261,6 +280,39 @@
     <Reference Include="SQLite-net">
       <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
     </Reference>
+    <Reference Include="Shim">
+      <HintPath>..\packages\shim.2.0.0\lib\portable-net45+netcore45+wpa81\Shim.dll</HintPath>
+    </Reference>
+    <Reference Include="AForge.MachineLearning">
+      <HintPath>..\packages\portable.aforge.machinelearning.2.2.5.60302\lib\portable-net45+netcore45+wpa81\AForge.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord">
+      <HintPath>..\packages\portable.accord.core.3.0.2.60302\lib\portable-net45+netcore45+wpa81\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math">
+      <HintPath>..\packages\portable.accord.math.3.0.2.60302\lib\portable-net45+netcore45+wpa81\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics">
+      <HintPath>..\packages\portable.accord.statistics.3.0.2.60302\lib\portable-net45+netcore45+wpa81\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.MachineLearning">
+      <HintPath>..\packages\portable.accord.machinelearning.3.0.2.60302\lib\portable-net45+netcore45+wpa81\Accord.MachineLearning.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\portable-net45+win8+wpa81+wp8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics">
+      <HintPath>..\packages\MathNet.Numerics.3.8.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Filtering">
+      <HintPath>..\packages\MathNet.Filtering.0.4.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MathNet.Filtering.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper">
+      <HintPath>..\packages\CsvHelper.2.16.3.0\lib\portable40-net40+sl5+win8+wp8+wpa81\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -284,6 +336,13 @@
     <Folder Include="DataStore\LocalDatabase\" />
     <Folder Include="Views\Pages\Train\" />
     <Folder Include="FileStorage\" />
+    <Folder Include="Filter\" />
+    <Folder Include="Sensor Processing\" />
+    <Folder Include="Logging\" />
+    <Folder Include="RL\" />
+    <Folder Include="RL\TDMethods\" />
+    <Folder Include="RL\QValue\" />
+    <Folder Include="RL\Exploration Policy\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.231\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

@@ -8,10 +8,6 @@ namespace Microsoft.Band.Portable.iML
 	public class SensorViewModel<T> : BaseBandViewModel
 	where T : IBandSensorReading
 	{
-
-
-
-
 		private int lines;
 		private ObservableRangeCollection<BaseBandViewModel> sensors;
 

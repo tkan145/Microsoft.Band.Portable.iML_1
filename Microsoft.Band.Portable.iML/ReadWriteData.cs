@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+//using System.IO;
 using System.Threading.Tasks;
 using System.Text;
 using PCLStorage;
@@ -74,16 +74,16 @@ namespace Microsoft.Band.Portable.iML
 
 			using (var stream = await file.OpenAsync(FileAccess.Read))
 			{
-				using (var reader = new StreamReader(stream))
-				{
-					while ((nextLine = await reader.ReadLineAsync()) != null)
-					{
-						contents.AppendFormat("{0}. ", lineCounter);
-						contents.Append(nextLine);
-						contents.AppendLine();
-						lineCounter++;
-					}
-				}
+				//using (var reader = new StreamReader(stream))
+				//{
+				//	while ((nextLine = await reader.ReadLineAsync()) != null)
+				//	{
+				//		contents.AppendFormat("{0}. ", lineCounter);
+				//		contents.Append(nextLine);
+				//		contents.AppendLine();
+				//		lineCounter++;
+				//	}
+				//}
 			}
 
 			//var jsonCompanies = await file.ReadAllTextAsync();

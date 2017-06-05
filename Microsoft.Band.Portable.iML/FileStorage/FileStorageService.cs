@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -37,20 +37,20 @@ namespace Microsoft.Band.Portable.iML
 
 			if (!isFileExisting.ToString().Equals("NotFound"))
 			{
-				try
-				{
-					IFile file = await folder.CreateFileAsync(key + ".txt",
-					CreationCollisionOption.OpenIfExists);
+				//try
+				//{
+				//	IFile file = await folder.CreateFileAsync(key + ".txt",
+				//	CreationCollisionOption.OpenIfExists);
 
-					String languageString = await file.ReadAllTextAsync();
+				//	String languageString = await file.ReadAllTextAsync();
 
-					XmlSerializer oXmlSerializer = new XmlSerializer(typeof(T));
-					return (T)oXmlSerializer.Deserialize(new StringReader(languageString));
-				}
-				catch (Exception ex)
-				{
-					return default(T);
-				}
+				//	XmlSerializer oXmlSerializer = new XmlSerializer(typeof(T));
+				//	return (T)oXmlSerializer.Deserialize(new StringReader(languageString));
+				//}
+				//catch (Exception ex)
+				//{
+				//	return default(T);
+				//}
 			}
 
 			return default(T);

@@ -16,7 +16,7 @@ namespace Microsoft.Band.Portable.iML.iOS
 			{
 				throw new ArgumentNullException("dbName");
 			}
-			string personalFolder = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			string personalFolder = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 			string libraryFolder = Path.Combine(personalFolder, "..", "Library");
 			var path = Path.Combine(libraryFolder, dbName);
 			Debug.WriteLine("Path :", libraryFolder);

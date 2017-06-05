@@ -8,15 +8,16 @@ namespace Microsoft.Band.Portable.iML
 		public iMLModel()
 		{
 			//this.Logs = new List<Log>();
-			Name = "";
-			Description = "";
+			Name = "QLearner";
+			Description = "QLearner";
 			Algorithm = "";         // qlearn/sarsa
 			Alpha = 0.1;            // Learning Rate
 			Gamma = 0.9;            // Discount factor
 			Epsilon = 0.2;          // initial epsilon for epsilon-greedy policy [0,1] 
+			learning_steps_total = 50;
 			MaxReward = 1;
 			MinReward = -1;
-			Eposch = 0;
+			Eposch = 1;
 			AccumulativeReward = 0;
 		}
 
@@ -39,9 +40,29 @@ namespace Microsoft.Band.Portable.iML
 		public double Epsilon { get; set; }
 		public string Algorithm { get; set; }
 		public string Filter { get; set; }
-
+		public bool IsApplyFilter { get; set; }
 		public int Eposch { get; set; }
 		public double AccumulativeReward { get; set; }
+		public List<double> random_action_distribution;
+
+		public int temporal_window = int.MinValue;
+		public int experience_size = int.MinValue;
+		public int start_learn_threshold = int.MinValue;
+		public int learning_steps_total = int.MinValue;
+		public int learning_steps_burnin = int.MinValue;
+		public int[] hidden_layer_sizes;
+
+		public double epsilon_min = double.MinValue;
+		public double epsilon_test_time = double.MinValue;
+
+		public int random_action()
+		{
+			// a bit of a helper function. It returns a random action
+			// we are abstracting this away because in future we may want to 
+			// do more sophisticated things. For example some actions could be more
+			// or less likely at "rest"/default state.
+			return 0;
+		}
 
 	}
 

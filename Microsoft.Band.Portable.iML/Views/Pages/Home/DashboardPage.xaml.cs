@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
-
+using Microsoft.Band.Portable;
 using Xamarin.Forms;
+using PCLStorage;
+using System.Threading.Tasks;
 
 namespace Microsoft.Band.Portable.iML.Views
 {
@@ -13,6 +15,8 @@ namespace Microsoft.Band.Portable.iML.Views
 		{
 			InitializeComponent();
 			BindingContext = new DashboardViewModel(Navigation);
+
+
 
 			ViewModel.Models.CollectionChanged += (sender, e) =>
 			{
@@ -27,7 +31,6 @@ namespace Microsoft.Band.Portable.iML.Views
 										if (model == null)
 											return;
 										var modelDetails = new AgentDetailsPage(model);
-
 
 										await NavigationService.PushAsync(Navigation, modelDetails);
 										ListViewModels.SelectedItem = null;

@@ -120,6 +120,7 @@ namespace Microsoft.Band.Portable.iML
 		public bool HasFilters => (!string.IsNullOrWhiteSpace(FilteredCategories) && !ShowAllCategories);
 
 		const string DatabaseIdKey = "offline_database";
+
 		static readonly int DatabaseIdDefault = 0;
 		public static int DatabaseId
 		{
@@ -135,8 +136,21 @@ namespace Microsoft.Band.Portable.iML
 			return DatabaseId++;
 		}
 
+		const string FileIdKey = "offline_databasefile";
+		static readonly int FileIdDefault = 0;
+		public static int FileId
+		{
+			get { return AppSettings.GetValueOrDefault<int>(FileIdKey, FileIdDefault); }
+			set
+			{
+				AppSettings.AddOrUpdateValue<int>(FileIdKey, value);
+			}
+		}
 
-
+		public static int UpdateFileId()
+		{
+			return FileId++;
+		}
 		#region INotifyPropertyChanged implementation
 		public event PropertyChangedEventHandler PropertyChanged;
 		void OnPropertyChanged([CallerMemberName]string name = "") =>

@@ -90,7 +90,6 @@ namespace Microsoft.Band.Portable.iML.DataStore.Local
 				await StoreManager.store.DeleteAsync(item).ConfigureAwait(false);
 				return true;
 			}
-
 		}
 		#endregion
 	}
