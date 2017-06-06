@@ -5,25 +5,15 @@ using FormsToolkit;
 using Xamarin.Forms;
 namespace Microsoft.Band.Portable.iML
 {
-    public class QLearning //: LearningAgent
+    public class QLearning : LearningAgent
     {
         // exploration policy
         private IExplorationPolicy explorationPolicy;
         private Environment env;
 
-        // Learning types
-        [Flags]
-        public enum LearningTypes
-        {
-            Q_LEARNING = 1,
-            SARSA = 2,
-            Q_LAMDA = 3,
-        }
-
-
-        int learningMethod;
         int actionSelection;
 
+        // Leaner setting
         private double discountFactor = 0.95;           // epsilon
         private double learningRate = 0.25;             // alpha
         private double gamma;
@@ -40,10 +30,10 @@ namespace Microsoft.Band.Portable.iML
 
         public bool isRunning;
         int[] saPair;
+        int maxInteration = 100;
 
 
-
-#region Init
+        #region Init
         /// <summary>
         /// QLearning Algorithm : Off-policy TD control. Finds the optimal greedy policy
         /// while following an epsilon-greedy policy
@@ -55,12 +45,16 @@ namespace Microsoft.Band.Portable.iML
         /// <param name="alpha">Learning rate</param>
         /// <param name="gamma">Gamma.</param>
         /// <param name="lambda">Lambda.</param>
+        public QLearning()
+        {
 
-        public QLearning(Environment env, IExplorationPolicy explorationPolicy,double num_episodes, double epsilon, double alpha, double gamma, double lambda)
+        }
+
+        public QLearning(Environment env, IExplorationPolicy explorationPolicy, double num_episodes, double epsilon, double alpha, double gamma, double lambda)
         {
             this.env = env;
             this.explorationPolicy = explorationPolicy;
-            this.learningMethod = (int)LearningTypes.Q_LEARNING;
+            //this.learningMethod = (int)LearningTypes.Q_LEARNING;
             this.discountFactor = epsilon;
             this.learningRate = alpha;
             this.lambda = lambda;
@@ -101,12 +95,12 @@ namespace Microsoft.Band.Portable.iML
             }
 
         }
-#endregion
+        #endregion
         #region
         // Execute one epoch
-        public void RunEpoch()
+        public Episode runOneEpisode()
         {
-            
+            return null;
         }
 
         public int GetAction(int state)
@@ -136,7 +130,7 @@ namespace Microsoft.Band.Portable.iML
             previousActionEstimations[action] *= (1.0 - learningRate);
             previousActionEstimations[action] += (learningRate * (reward + discountFactor * maxNextExpectedReward) - previousActionEstimations[action]);
         }
-#endregion
+        #endregion
         #region Property
         public int StatesCount
         {
@@ -180,14 +174,14 @@ namespace Microsoft.Band.Portable.iML
         public double Gamma
         {
             get { return gamma; }
-			set
-			{
-				if (value < 0 || value > 1.0)
-					throw new ArgumentOutOfRangeException("Gamma factor should be between 0 and 1.");
+            set
+            {
+                if (value < 0 || value > 1.0)
+                    throw new ArgumentOutOfRangeException("Gamma factor should be between 0 and 1.");
                 gamma = value;
-			}
+            }
         }
-#endregion
+        #endregion
     }
 }
 

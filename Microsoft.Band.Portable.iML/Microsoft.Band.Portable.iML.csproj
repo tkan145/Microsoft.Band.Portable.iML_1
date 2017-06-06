@@ -221,6 +221,8 @@
     <Compile Include="RL\TDMethods\Sarsa.cs" />
     <Compile Include="RL\Exploration Policy\TabuSearchExploration.cs" />
     <Compile Include="Filter\ExponentialMVA.cs" />
+    <Compile Include="RL\Algorithm.cs" />
+    <Compile Include="Helpers\Mathf.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
