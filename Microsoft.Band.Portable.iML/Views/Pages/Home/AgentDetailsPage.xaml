@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:Microsoft.Band.Portable.iML.Views;assembly=Microsoft.Band.Portable.iML"
+    xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
 	xmlns:toolkit="clr-namespace:FormsToolkit;assembly=FormsToolkit"
 	xmlns:chart="clr-namespace:Syncfusion.SfChart.XForms;assembly=Syncfusion.SfChart.XForms"
 	x:Class="Microsoft.Band.Portable.iML.AgentDetailsPage"
@@ -15,7 +16,11 @@
      </ResourceDictionary>
     </ContentPage.Resources>
 	<ContentPage.ToolbarItems>
-        <ToolbarItem Icon="Trash-30.png" Text="Share" Command="{Binding ShareCommand}"/>
+        <ToolbarItem Text="Save Chart " Command="{Binding SaveCommand}" CommandParameter="{Binding Source={x:Reference sfChart}}">
+        <ToolbarItem.Icon>
+            <OnPlatform x:TypeArguments="FileImageSource" iOS="export.png"/>
+        </ToolbarItem.Icon>
+       </ToolbarItem>
     </ContentPage.ToolbarItems>
 	<Grid>
         <Grid.RowDefinitions>

@@ -15,15 +15,18 @@ namespace Microsoft.Band.Portable.iML
 			InitializeComponent();
 			BindingContext = new AgentDetailsViewModel(Navigation, model);
 
-			//ButtonTrain.Clicked += async (sender, e) =>
-			//{
-			//	await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new TrainPage(ViewModel.Agent)));
-			//};
-
+            //ButtonTrain.Clicked += async (sender, e) =>
+            //{
+            //	await NavigationService.PushModalAsync(Navigation, new iMLNavigationPage(new TrainPage(ViewModel.Agent)));
+            //};
+           
 
 		}
 
-
+        private void SaveClicked(object sender, EventArgs e)
+        {
+            sfChart.SaveAsImage("Image.jpg");
+        }
 		private void UpdatePage()
 		{
 			//bool forceRefresh = (DateTime.UtcNow > (ViewModel?.NextForceRefresh ?? DateTime.UtcNow));
@@ -52,7 +55,7 @@ namespace Microsoft.Band.Portable.iML
 		protected override void OnDisappearing()
 		{
 			base.OnDisappearing();
-			ViewModel.UnsubscribeMessage();
+			
 			UpdatePage();
 		}
 

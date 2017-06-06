@@ -321,6 +321,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\QUT4.jpg" />
     <AndroidResource Include="Resources\drawable-xhdpi\QUT4.jpg" />
     <AndroidResource Include="Resources\drawable-xxhdpi\QUT4.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\export.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\menu\" />

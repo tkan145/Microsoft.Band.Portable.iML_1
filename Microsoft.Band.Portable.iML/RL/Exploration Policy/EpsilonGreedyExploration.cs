@@ -20,7 +20,13 @@ namespace Microsoft.Band.Portable.iML
 			}
 		}
 
-		public EpsilonGreedyExploration(double epsilon)
+		/// <summary>
+		/// Creates an epsilon-greedy policy based on a given Q-funtion and epsilon
+		/// </summary>
+		/// <param name="Q">A dictionary that maps from state -> action-values</param>
+		/// <param name="epsilon">the probability to select a random action. [0-1]</param>
+		/// <param name="nA">Number of actions in the environment</param>
+		public EpsilonGreedyExploration(int Q, double epsilon, int nA)
 		{
 			Epsilon = epsilon;
 		}

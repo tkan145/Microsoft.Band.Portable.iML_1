@@ -14,6 +14,7 @@ using MathNet.Numerics.Statistics;
 using System.Threading;
 namespace Microsoft.Band.Portable.iML
 {
+    
 	public class AgentDetailsViewModel : BaseViewModel
 	{
 		// Environment which agent will interact with. In this case will be Microsoft Band
@@ -34,24 +35,10 @@ namespace Microsoft.Band.Portable.iML
 
 		}
 
-		#region Message Service
-		public void SubscribeMessage()
-		{
-
-		}
-
-		public void UnsubscribeMessage()
-		{
-			MessagingService.Current.Unsubscribe(MessageKeys.FeedbackActon);
-			Debug.WriteLine("Unsubscribe to Action Message");
-		}
-
-		#endregion
-
 		#region Commands
 		RelayCommand deleteCommand;
 		public RelayCommand DeleteCommand =>
-			deleteCommand ?? (deleteCommand = new RelayCommand(async () => await ExecuteDeleteCommandAsync()));
+        deleteCommand ?? (deleteCommand = new RelayCommand(async () => await ExecuteDeleteCommandAsync()));
 		public async Task ExecuteDeleteCommandAsync()
 		{
 			if (IsBusy)
@@ -72,6 +59,44 @@ namespace Microsoft.Band.Portable.iML
 				IsBusy = false;
 			}
 		}
+
+        RelayCommand<object> saveCommand;
+        public RelayCommand<object> SaveCommand =>
+        saveCommand ?? (saveCommand = new RelayCommand<object>(async(chart) => await ExecuteSaveCommandAsync(chart)));
+        public async Task ExecuteSaveCommandAsync(object chart)
+		{
+			if (IsBusy)
+				return;
+
+			try
+			{
+				IsBusy = true;
+                var sfChart = chart as SfChart;
+                if(sfChart != null)
+                Debug.WriteLine(sfChart);
+                try
+                {
+					sfChart.SaveAsImage("Chart.png");
+                }
+                catch(Exception e)
+                {
+
+                    throw new Exception(e.Message);
+                }
+                //sfChart.SaveAsImage("ChartSample.jpg");
+				//await StoreManager.ModelStore.RemoveAsync(Agent);
+				//await Navigation.PopToRootAsync();
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
+			finally
+			{
+				IsBusy = false;
+			}
+		}
+
 
 
 		RelayCommand loadLogCommand;
@@ -283,16 +308,16 @@ namespace Microsoft.Band.Portable.iML
 			{
 				case "Q-Learning":
 					// create new QLearning algorithm's instance
-					qLearning = new QLearning(1000, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
+					//qLearning = new QLearning(1000, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
 					await StartQLearning(env, qLearning);
 					break;
 				case "SARSA":
 					// create new Sarsa algorithm's instance
-					sarsa = new Sarsa(256, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
+					//sarsa = new Sarsa(256, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
 					//		await StartSarsaLearning(env, sarsa);
 					break;
 				default:
-					qLearning = new QLearning(1000, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
+					//qLearning = new QLearning(1000, 4, new TabuSearchExploration(4, new EpsilonGreedyExploration(explorationRate)));
 					await StartQLearning(env, qLearning);
 					break;
 			}
